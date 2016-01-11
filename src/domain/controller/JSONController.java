@@ -14,7 +14,12 @@ import org.json.JSONObject;
 
 public class JSONController {
 
-	public JSONObject readJsonFromUrl(String url) throws IOException,
+	/*
+	 * !!! RETURNS THE NAME OF THE SET AND THEN THE ID OF THE BUSINESS RULE SO
+	 * IT IS ALTERNATING NAMES AND ID`S JUST LIKE THIS <setname>, <id>,
+	 * <setname>, <id> AND SO ON AND SO FORTH!!!
+	 */
+	public ArrayList<String> readJsonFromUrl(String url) throws IOException,
 			JSONException {
 		InputStream input = new URL(url).openStream();
 
@@ -28,17 +33,12 @@ public class JSONController {
 			}
 
 			JSONObject json = new JSONObject(jsonText);
-			return json;
+			return jsonToStrings(json);
 		} finally {
 			input.close();
 		}
 	}
 
-	/*
-	 * !!! RETURNS THE NAME OF THE SET AND THEN THE ID OF THE BUSINESS RULE SO
-	 * IT IS ALTERNATING NAMES AND ID`S JUST LIKE THIS <setname>, <id>,
-	 * <setname>, <id> AND SO ON AND SO FORTH!!!
-	 */
 	public ArrayList<String> jsonToStrings(JSONObject json) {
 		ArrayList<String> results = new ArrayList<String>();
 
