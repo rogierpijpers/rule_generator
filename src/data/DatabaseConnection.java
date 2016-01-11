@@ -10,10 +10,10 @@ public class DatabaseConnection implements AutoCloseable{
 	private Connection connection;
 	
 	public DatabaseConnection() {
-		String URL = "";
+		String URL = "jdbc:oracle:thin:@ondora02.hu.nl:8521:cursus02";
 		String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
-		String USERNAME = "";
-		String PASSWORD = "";
+		String USERNAME = "tosad_2015_2c_team1";
+		String PASSWORD = "tosad_2015_2c_team1";
 		try{
 			Class.forName(JDBC_DRIVER);
 		}catch(ClassNotFoundException e){
