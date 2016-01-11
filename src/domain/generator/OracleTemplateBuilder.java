@@ -1,5 +1,12 @@
 package domain.generator;
 
+import org.stringtemplate.v4.ST;
+import org.stringtemplate.v4.STGroup;
+import org.stringtemplate.v4.STGroupString;
+
+import util.TemplateDTO;
+import data.TemplateDAO;
+
 public class OracleTemplateBuilder implements TemplateBuilder {
 	private TemplateDAO templateDAO;
 	private String bodyName;

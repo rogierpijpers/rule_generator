@@ -1,5 +1,6 @@
 package domain.generator;
 
+import data.target.TargetDAO;
 import data.utility.FileSaver;
 
 public class GeneratorServiceImpl implements GeneratorService {
