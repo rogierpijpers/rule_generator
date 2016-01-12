@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import data.target.TargetDAO;
 
-public class OracleTargetDatabase implements TargetDatase{
+public class OracleTargetDatabase implements TargetDatabase{
 	private String name;
 	private DatabaseType type;
 	private ArrayList<Table> tables = new ArrayList<>();
