@@ -7,32 +7,20 @@ import domain.businessrule.database.Attribute;
 import domain.businessrule.database.Column;
 
 public class AttributeRange extends BusinessRule{
-
-	private String code;
-	private String name;
 	private double minValue;
 	private double maxValue;
 	private Operator operator;
 	private Attribute attribute;
 
+	public AttributeRange(String code, String name, double minValue, double maxValue, Operator operator, Attribute attribute){
+		super.setCode(code);
+		super.setName(name);
+		this.minValue = minValue;
+		this.maxValue = maxValue;
+		this.operator = operator;
+		this.attribute = attribute;
+	}
 	
-	
-	
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public double getMinValue() {
 		return minValue;
