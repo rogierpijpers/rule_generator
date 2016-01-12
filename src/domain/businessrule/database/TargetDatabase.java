@@ -2,7 +2,7 @@ package domain.businessrule.database;
 
 import data.target.TargetDAO;
 
-public interface TargetDatase {
+public interface TargetDatabase {
 
 	public TargetDAO getTargetDAO();
 	public DatabaseType getType();
