@@ -13,9 +13,9 @@ public class OracleScriptBuilder implements ScriptBuilder {
 
 	@Override
 	public String createScript(BusinessRule businessRule) {
-		ST template = templateBuilder.getTemplate(businessRule.getCode(),
+		ST template = templateBuilder.getTemplate(businessRule.getType().getCode(),
 				businessRule.getCodeType());
-		
+
 		template = businessRule.fillTemplate(template);
 
 		return template.render();

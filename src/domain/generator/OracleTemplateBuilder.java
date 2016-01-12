@@ -40,8 +40,10 @@ public class OracleTemplateBuilder implements TemplateBuilder {
 		ST template = group.getInstanceOf(bodyName);
 		template.add("target", targetTemplate);
 		template.add("ruleCode", ruleTemplate);
-
-		return template;
+		
+		ST result = new ST(template.render());
+		
+		return result;
 	}
 
 }
