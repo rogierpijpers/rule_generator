@@ -78,8 +78,8 @@ public class AttributeRange extends BusinessRule{
 	@Override
 	public ST fillTemplate(ST ruleTemplate) {
 		Column column = (Column) attribute;
-		ruleTemplate.add("targetTable", "");
-		ruleTemplate.add("column", "");
+		ruleTemplate.add("targetTable", column.getTable().getName());
+		ruleTemplate.add("column", column.getName());
 		ruleTemplate.add("operator", operator.getCharacter());
 		ruleTemplate.add("minValue", minValue);
 		ruleTemplate.add("maxValue", maxValue);
