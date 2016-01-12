@@ -7,11 +7,15 @@ import data.target.TargetDAO;
 public class OracleTargetDatabase implements TargetDatabase{
 	private String name;
 	private DatabaseType type;
-
+	private TargetDAO targetDAO;
+	
+	public OracleTargetDatabase(){
+		targetDAO = new TargetDAO();
+	}
+	
 	@Override
 	public TargetDAO getTargetDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return targetDAO;
 	}
 
 	@Override
