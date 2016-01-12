@@ -13,7 +13,7 @@ public class TemplateDAO {
 	public TemplateDTO getTemplate(String name){
 		TemplateDTO template = null;
 		try(DatabaseConnection connection = new DatabaseConnection()){
-			ResultSet result = connection.query("Select * from GeneratorTemplate where name = '"+name+"';");
+			ResultSet result = connection.query("Select * from GeneratorTemplate where name = '"+name+"'");
 			if(result.next()){
 				String nm = result.getString("name");
 				String scr = result.getString("script");

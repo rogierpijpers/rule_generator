@@ -27,17 +27,14 @@ public class OracleTemplateBuilder implements TemplateBuilder {
 		String arguments = bodyName + "(";
 
 		TemplateDTO bodyDTO = templateDAO.getTemplate(bodyName);
-		TemplateDTO ruleDTO = templateDAO.getTemplate("PLSQL_" + typeCode
-				+ "_TEMPLATE");
-		TemplateDTO targetDTO = templateDAO.getTemplate("PLSQL_" + typeCode
-				+ "_TARGET_TEMPLATE");
+		TemplateDTO ruleDTO = templateDAO.getTemplate("PLSQL_" + typeCode + "_TEMPLATE");
+		TemplateDTO targetDTO = templateDAO.getTemplate("PLSQL_" + typeCode + "_TARGET_TEMPLATE");
 
 		String bodyTemplate = bodyDTO.getTemplate();
 		String ruleTemplate = ruleDTO.getTemplate();
 		String targetTemplate = targetDTO.getTemplate();
 
-		arguments += bodyDTO.getArgument() + ", " + ruleDTO.getArgument()
-				+ ", " + targetDTO.getArgument() + ") ::= ";
+		arguments += bodyDTO.getArgument() + ", " + ruleDTO.getArgument() + ", " + targetDTO.getArgument() + ") ::= ";
 
 		group = new STGroupString(arguments + bodyTemplate);
 		ST template = group.getInstanceOf(bodyName);
