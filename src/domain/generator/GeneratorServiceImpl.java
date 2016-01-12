@@ -2,6 +2,9 @@ package domain.generator;
 
 import data.target.TargetDAO;
 import data.utility.FileSaver;
+import domain.businessrule.BusinessRule;
+import domain.businessrule.database.DatabaseType;
+import domain.businessrule.database.TargetDatabase;
 
 public class GeneratorServiceImpl implements GeneratorService {
 	private TargetDatabase targetDatabase;

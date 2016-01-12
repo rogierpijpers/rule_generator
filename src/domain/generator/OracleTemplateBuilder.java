@@ -6,6 +6,7 @@ import org.stringtemplate.v4.STGroupString;
 
 import util.TemplateDTO;
 import data.TemplateDAO;
+import domain.businessrule.CodeType;
 
 public class OracleTemplateBuilder implements TemplateBuilder {
 	private TemplateDAO templateDAO;

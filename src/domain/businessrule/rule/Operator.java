@@ -1,4 +1,4 @@
-package businessrule.rule;
+package domain.businessrule.rule;
 
 public class Operator {
 

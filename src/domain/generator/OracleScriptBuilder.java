@@ -1,5 +1,9 @@
 package domain.generator;
 
+import org.stringtemplate.v4.ST;
+
+import domain.businessrule.BusinessRule;
+
 public class OracleScriptBuilder implements ScriptBuilder {
 	private TemplateBuilder templateBuilder;
 

@@ -1,4 +1,4 @@
-package businessrule;
+package domain.businessrule;
 
 import java.util.ArrayList;
 
@@ -9,10 +9,10 @@ public class BusinessRuleType {
 	private String example;
 	private Category category;
 	
-	public ArrayList<String> getAllCodes(){
+	public static ArrayList<String> getAllCodes(){
 		return null;
 	}
-	public BusinessRuleType getDetails(String code){
+	public static BusinessRuleType getDetails(String code){
 		return null;
 	}
 }

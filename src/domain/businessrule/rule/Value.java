@@ -1,6 +1,6 @@
-package businessrule.rule;
+package domain.businessrule.rule;
 
-import businessrule.database.Attribute;
+import domain.businessrule.database.Attribute;
 
 public class Value extends Attribute{
 

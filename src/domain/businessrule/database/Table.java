@@ -1,4 +1,4 @@
-package businessrule.database;
+package domain.businessrule.database;
 
 import java.util.ArrayList;
 
