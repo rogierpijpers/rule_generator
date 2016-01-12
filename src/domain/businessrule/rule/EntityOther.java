@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.stringtemplate.v4.ST;
 
 import domain.businessrule.BusinessRule;
+import domain.businessrule.database.TargetDatabase;
 
 public class EntityOther extends BusinessRule{
 
@@ -18,6 +19,15 @@ public class EntityOther extends BusinessRule{
 	// ---- fill templates for generation
 	@Override
 	public ST fillTemplate(ST ruleTemplate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+	@Override
+	public TargetDatabase getTargetDatabase() {
 		// TODO Auto-generated method stub
 		return null;
 	}

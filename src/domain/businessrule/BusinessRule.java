@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.stringtemplate.v4.ST;
 
+import domain.businessrule.database.TargetDatabase;
+
 public abstract class BusinessRule {
 
 	private String code;
@@ -47,6 +49,8 @@ public abstract class BusinessRule {
 	// ---- fill templates for generation
 	
 	public abstract ST fillTemplate(ST ruleTemplate);
+	
+	public abstract TargetDatabase getTargetDatabase();
 	
 	// ---- for retrieving from database
 	

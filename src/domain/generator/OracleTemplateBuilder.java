@@ -10,8 +10,6 @@ import domain.businessrule.CodeType;
 
 public class OracleTemplateBuilder implements TemplateBuilder {
 	private TemplateDAO templateDAO;
-	private String bodyName;
-	private STGroup group;
 
 	public OracleTemplateBuilder() {
 		templateDAO = new TemplateDAO();
@@ -22,7 +20,7 @@ public class OracleTemplateBuilder implements TemplateBuilder {
 	}
 
 	private ST build(String typeCode, CodeType codeType) {
-		bodyName = "PLSQL_" + codeType + "_BODY_TEMPLATE";
+		String bodyName = "PLSQL_" + codeType + "_BODY_TEMPLATE";
 
 		String arguments = bodyName + "(";
 
@@ -36,7 +34,7 @@ public class OracleTemplateBuilder implements TemplateBuilder {
 
 		arguments += bodyDTO.getArgument() + ", " + ruleDTO.getArgument() + ", " + targetDTO.getArgument() + ") ::= ";
 
-		group = new STGroupString(arguments + bodyTemplate);
+		STGroup group = new STGroupString(arguments + bodyTemplate);
 		ST template = group.getInstanceOf(bodyName);
 		template.add("target", targetTemplate);
 		template.add("ruleCode", ruleTemplate);

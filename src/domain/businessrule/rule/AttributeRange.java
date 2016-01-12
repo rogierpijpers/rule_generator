@@ -5,6 +5,7 @@ import org.stringtemplate.v4.ST;
 import domain.businessrule.BusinessRule;
 import domain.businessrule.database.Attribute;
 import domain.businessrule.database.Column;
+import domain.businessrule.database.TargetDatabase;
 
 public class AttributeRange extends BusinessRule{
 	private double minValue;
@@ -73,6 +74,13 @@ public class AttributeRange extends BusinessRule{
 		ruleTemplate.add("minValue", this.getMinValue());
 		ruleTemplate.add("maxValue", this.getMaxValue());
 		return ruleTemplate;
+	}
+
+
+	@Override
+	public TargetDatabase getTargetDatabase() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
