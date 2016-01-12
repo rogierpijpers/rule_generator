@@ -79,8 +79,8 @@ public class AttributeRange extends BusinessRule{
 
 	@Override
 	public TargetDatabase getTargetDatabase() {
-		// TODO Auto-generated method stub
-		return null;
+		Column column = (Column) this.getAttribute();
+		return column.getTable().getTargetDatabase();
 	}
 
 }
