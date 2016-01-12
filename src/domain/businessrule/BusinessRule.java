@@ -13,10 +13,10 @@ public abstract class BusinessRule {
 	private CodeType codeType;
 	
 	public void setCodeType(CodeType codeType){
-		
+		this.codeType = codeType;
 	}
 	public CodeType getCodeType(){
-		return null;
+		return codeType;
 	}
 	
 	public String getCode() {
