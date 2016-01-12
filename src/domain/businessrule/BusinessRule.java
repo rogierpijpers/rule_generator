@@ -48,8 +48,6 @@ public abstract class BusinessRule {
 	
 	public abstract ST fillTemplate(ST ruleTemplate);
 	
-	public abstract ST fillTargetTemplate(ST template);
-	
 	// ---- for retrieving from database
 	
 	public static ArrayList<RuleHolder> getAllCodesAndNames(){

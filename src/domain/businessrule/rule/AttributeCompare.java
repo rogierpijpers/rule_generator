@@ -21,9 +21,5 @@ public class AttributeCompare extends BusinessRule{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Override
-	public ST fillTargetTemplate(ST template) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 }

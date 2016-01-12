@@ -22,9 +22,5 @@ public class TupleCompare extends BusinessRule{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Override
-	public ST fillTargetTemplate(ST template) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 }
