@@ -3,7 +3,7 @@ package userinterface;
 import java.io.File;
 import java.io.IOException;
 
-import domain.businessrule.RuleHolder;
+import util.RuleHolder;
 import domain.controller.UIController;
 import javafx.application.Application;
 import javafx.application.Platform;

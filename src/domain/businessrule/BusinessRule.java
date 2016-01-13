@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.stringtemplate.v4.ST;
 
+import util.RuleHolder;
 import domain.businessrule.database.TargetDatabase;
 
 public abstract class BusinessRule {

@@ -1,4 +1,4 @@
-package domain.businessrule;
+package util;
 
 public class RuleHolder {
 

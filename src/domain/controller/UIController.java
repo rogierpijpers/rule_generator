@@ -2,7 +2,7 @@ package domain.controller;
 
 import java.util.ArrayList;
 
-import domain.businessrule.RuleHolder;
+import util.RuleHolder;
 import javafx.collections.ObservableList;
 
 public class UIController {

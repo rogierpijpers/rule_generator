@@ -2,6 +2,8 @@ package domain.businessrule;
 
 import java.util.ArrayList;
 
+import util.RuleHolder;
+
 public class BusinessRuleServiceImpl implements BusinessRuleService {
 
 	@Override
