@@ -8,9 +8,6 @@ import domain.businessrule.database.Column;
 import domain.businessrule.database.TargetDatabase;
 
 public class AttributeList extends BusinessRule {
-
-	private String code;
-	private String name;
 	private Attribute attribute;
 
 	public AttributeList(String code, String name, Attribute attribute) {
@@ -18,22 +15,6 @@ public class AttributeList extends BusinessRule {
 		super.setCode(code);
 		super.setName(name);
 		this.attribute = attribute;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public Attribute getAttribute() {
