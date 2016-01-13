@@ -57,6 +57,14 @@ public abstract class BusinessRule {
 	public static ArrayList<RuleHolder> getAllCodesAndNames() {
 		return null;
 	}
+	
+	public static ArrayList<RuleHolder> getCodesAndNamesFromSet(String setName){
+		return null;
+	}
+	
+	public static ArrayList<String> getAllSetNames(){
+		return null;
+	}
 
 	public static BusinessRule getDetails(String code) {
 		return null;

@@ -10,4 +10,6 @@ public interface BusinessRuleService {
 	public BusinessRule getBusinessRule(String ruleCode);
 	public ArrayList<String> getAllCategoryNames();
 	public ArrayList<String> getAllTypeCodes();
+	public ArrayList<RuleHolder> getCodesAndNamesFromSet(String setName);
+	public ArrayList<String> getAllSetNames();
 }

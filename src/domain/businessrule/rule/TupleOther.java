@@ -48,20 +48,15 @@ public class TupleOther extends BusinessRule{
 	}
 
 	// ---- fill templates for generation
-	@Override
-	public ST fillTemplate(ST ruleTemplate) {
-		Column column = (Column) this.getAttribute();
-		ruleTemplate.add("code", this.getCode());
-		ruleTemplate.add("targetTable", column.getTable().getName());
-		ruleTemplate.add("column", column.getName());
+		@Override
+		public ST fillTemplate(ST ruleTemplate) {
 
-		return ruleTemplate;
-	}
+			return null;
+		}
 
-	@Override
-	public TargetDatabase getTargetDatabase() {
-		Column column = (Column) this.getAttribute();
-		return column.getTable().getTargetDatabase();
-	}
+		@Override
+		public TargetDatabase getTargetDatabase() {
+			return null;
+		}
 
 }

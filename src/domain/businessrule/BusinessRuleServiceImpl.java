@@ -30,4 +30,16 @@ public class BusinessRuleServiceImpl implements BusinessRuleService {
 		return null;
 	}
 
+	@Override
+	public ArrayList<RuleHolder> getCodesAndNamesFromSet(String setName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getAllSetNames() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
