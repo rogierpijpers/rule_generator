@@ -3,7 +3,7 @@ package data;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import data.target.DatabaseConnection;
+import data.DatabaseConnection;
 
 public class SetDAO {
 

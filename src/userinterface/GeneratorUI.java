@@ -46,9 +46,9 @@ public class GeneratorUI extends Application{
 		Label setLabel = new Label("current set:");
 		ComboBox<String> set = new ComboBox<>();
 		set.setMinWidth(80);
-		if(controller.getAllSets() != null){
+		try{
 			set.getItems().addAll(controller.getAllSets());
-		}
+		}catch(NullPointerException e){};
 		
 		ListView<RuleHolder> list = new ListView<RuleHolder>();
 		if(set.getValue() != null){	
