@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.stringtemplate.v4.ST;
 
 import util.RuleHolder;
+import data.SetDAO;
 import domain.businessrule.database.TargetDatabase;
 
 public abstract class BusinessRule {
@@ -63,7 +64,7 @@ public abstract class BusinessRule {
 	}
 	
 	public static ArrayList<String> getAllSetNames(){
-		return null;
+		return SetDAO.getAllSetNames();
 	}
 
 	public static BusinessRule getDetails(String code) {
