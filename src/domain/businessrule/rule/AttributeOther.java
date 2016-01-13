@@ -5,6 +5,7 @@ import org.stringtemplate.v4.ST;
 import domain.businessrule.BusinessRule;
 import domain.businessrule.BusinessRuleType;
 import domain.businessrule.database.Attribute;
+import domain.businessrule.database.Column;
 import domain.businessrule.database.TargetDatabase;
 
 public class AttributeOther extends BusinessRule {
@@ -39,22 +40,19 @@ public class AttributeOther extends BusinessRule {
 	// ---- fill templates for generation
 	@Override
 	public ST fillTemplate(ST ruleTemplate) {
-		/*
-		 * TO DO: Column column = (Column) this.getAttribute();
-		 * ruleTemplate.add("code", this.getCode());
-		 * ruleTemplate.add("targetTable", column.getTable().getName());
-		 * ruleTemplate.add("column", column.getName());
-		 */
+		
+		 Column column = (Column) this.getAttribute();
+		 ruleTemplate.add("code", this.getCode());
+		 ruleTemplate.add("targetTable", column.getTable().getName());
+		 ruleTemplate.add("plsql", this.getPlsql());
+
 		return ruleTemplate;
 	}
 
 	@Override
 	public TargetDatabase getTargetDatabase() {
-		/*
-		 * TO DO Column column = (Column) this.getAttribute(); return
-		 * column.getTable().getTargetDatabase();
-		 */
-		return null;
+		Column column = (Column) this.getAttribute(); 
+		return column.getTable().getTargetDatabase();
 	}
 
 }
