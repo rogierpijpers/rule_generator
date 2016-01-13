@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import org.stringtemplate.v4.ST;
 
 import domain.businessrule.BusinessRule;
+import domain.businessrule.BusinessRuleType;
 import domain.businessrule.database.Attribute;
-import domain.businessrule.database.Column;
 import domain.businessrule.database.TargetDatabase;
 
 public class TupleCompare extends BusinessRule {
@@ -16,10 +16,12 @@ public class TupleCompare extends BusinessRule {
 	private Operator operator;
 	private ArrayList<Attribute> attributes;
 
-	public TupleCompare(String code, String name, Operator operator, ArrayList<Attribute> attributes) {
+	public TupleCompare(String code, String name, Operator operator,
+			BusinessRuleType businessRuleType, ArrayList<Attribute> attributes) {
 		super.setCode(code);
 		super.setName(name);
 		this.operator = operator;
+		super.setType(businessRuleType);
 		attributes = new ArrayList<Attribute>();
 	}
 
@@ -56,15 +58,15 @@ public class TupleCompare extends BusinessRule {
 	}
 
 	// ---- fill templates for generation
-		@Override
-		public ST fillTemplate(ST ruleTemplate) {
+	@Override
+	public ST fillTemplate(ST ruleTemplate) {
 
-			return null;
-		}
+		return null;
+	}
 
-		@Override
-		public TargetDatabase getTargetDatabase() {
-			return null;
-		}
+	@Override
+	public TargetDatabase getTargetDatabase() {
+		return null;
+	}
 
 }

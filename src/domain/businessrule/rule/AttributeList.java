@@ -3,6 +3,7 @@ package domain.businessrule.rule;
 import org.stringtemplate.v4.ST;
 
 import domain.businessrule.BusinessRule;
+import domain.businessrule.BusinessRuleType;
 import domain.businessrule.database.Attribute;
 import domain.businessrule.database.Column;
 import domain.businessrule.database.TargetDatabase;
@@ -11,10 +12,10 @@ public class AttributeList extends BusinessRule {
 	private Attribute attribute;
 	private String value;
 
-	public AttributeList(String code, String name, Attribute attribute) {
-
+	public AttributeList(String code, String name, BusinessRuleType businessRuleType, Attribute attribute) {
 		super.setCode(code);
 		super.setName(name);
+		super.setType(businessRuleType);
 		this.attribute = attribute;
 	}
 

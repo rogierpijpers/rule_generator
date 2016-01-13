@@ -3,6 +3,7 @@ package domain.businessrule.rule;
 import org.stringtemplate.v4.ST;
 
 import domain.businessrule.BusinessRule;
+import domain.businessrule.BusinessRuleType;
 import domain.businessrule.database.Attribute;
 import domain.businessrule.database.Column;
 import domain.businessrule.database.TargetDatabase;
@@ -12,10 +13,10 @@ public class AttributeCompare extends BusinessRule {
 	private Operator operator;
 	private Attribute attribute;
 
-	public AttributeCompare(String code, String name, double value, Operator operator, Attribute attribute) {
-
+	public AttributeCompare(String code, String name, double value, Operator operator, BusinessRuleType businessRuleType, Attribute attribute) {
 		super.setCode(code);
 		super.setName(name);
+		super.setType(businessRuleType);
 		this.value = value;
 		this.operator = operator;
 		this.attribute = attribute;

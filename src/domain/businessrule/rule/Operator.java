@@ -5,6 +5,10 @@ public class Operator {
 	private String name;
 	private String character;
 	
+	public Operator(String name, String character){
+		this.name = name;
+		this.character = character;
+	}
 	public String getName() {
 		return name;
 	}

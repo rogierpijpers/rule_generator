@@ -5,21 +5,21 @@ import java.util.ArrayList;
 import org.stringtemplate.v4.ST;
 
 import domain.businessrule.BusinessRule;
+import domain.businessrule.BusinessRuleType;
 import domain.businessrule.database.Attribute;
-import domain.businessrule.database.Column;
 import domain.businessrule.database.TargetDatabase;
 
-public class EntityOther extends BusinessRule{
+public class EntityOther extends BusinessRule {
 
 	private String code;
 	private String name;
 	private ArrayList<Attribute> attributes;
-	
 
-	public EntityOther(String code, String name, ArrayList<Attribute> attributes) {
-
+	public EntityOther(String code, String name,
+			BusinessRuleType businessRuleType, ArrayList<Attribute> attributes) {
 		super.setCode(code);
 		super.setName(name);
+		super.setType(businessRuleType);
 		attributes = new ArrayList<Attribute>();
 	}
 
