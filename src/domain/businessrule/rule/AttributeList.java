@@ -12,11 +12,12 @@ public class AttributeList extends BusinessRule {
 	private Attribute attribute;
 	private String value;
 
-	public AttributeList(String code, String name, BusinessRuleType businessRuleType, Attribute attribute) {
+	public AttributeList(String code, String name, Attribute attribute, BusinessRuleType businessRuleType, String value) {
 		super.setCode(code);
 		super.setName(name);
 		super.setType(businessRuleType);
 		this.attribute = attribute;
+		this.value = value;
 	}
 
 	public Attribute getAttribute() {
