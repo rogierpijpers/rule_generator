@@ -9,6 +9,7 @@ import domain.businessrule.database.TargetDatabase;
 
 public class AttributeList extends BusinessRule {
 	private Attribute attribute;
+	private String value;
 
 	public AttributeList(String code, String name, Attribute attribute) {
 
@@ -24,6 +25,15 @@ public class AttributeList extends BusinessRule {
 	public void setAttribute(Value attribute) {
 		this.attribute = attribute;
 	}
+	
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+	
 
 	// ---- fill templates for generation
 	@Override
@@ -32,6 +42,7 @@ public class AttributeList extends BusinessRule {
 		ruleTemplate.add("code", this.getCode());
 		ruleTemplate.add("targetTable", column.getTable().getName());
 		ruleTemplate.add("column", column.getName());
+		ruleTemplate.add("value", this.getValue());
 
 		return ruleTemplate;
 	}
