@@ -16,12 +16,9 @@ public class SetDAO {
 		
 		try (DatabaseConnection connection = new DatabaseConnection()) {
 			ResultSet result = connection.query("SELECT name FROM SETB ORDER BY id");
-			result.last();
-			int lastResult = result.getRow();
-			result.first();
 			
-			for(int i = 1; i <= lastResult; i++){
-				setNames.add(result.getString(i));
+			while(result.next()){
+				setNames.add(result.getString(1));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
