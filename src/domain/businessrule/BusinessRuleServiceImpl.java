@@ -8,38 +8,32 @@ public class BusinessRuleServiceImpl implements BusinessRuleService {
 
 	@Override
 	public ArrayList<RuleHolder> getAllBusinessRules() {
-		// TODO Auto-generated method stub
-		return null;
+		return BusinessRule.getAllCodesAndNames();
 	}
 
 	@Override
 	public BusinessRule getBusinessRule(String ruleCode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<String> getAllCategoryNames() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<String> getAllTypeCodes() {
-		// TODO Auto-generated method stub
-		return null;
+		return BusinessRule.getDetails(ruleCode);
 	}
 
 	@Override
 	public ArrayList<RuleHolder> getCodesAndNamesFromSet(String setName) {
-		// TODO Auto-generated method stub
-		return null;
+		return BusinessRule.getCodesAndNamesFromSet(setName);
 	}
 
 	@Override
 	public ArrayList<String> getAllSetNames() {
-		// TODO Auto-generated method stub
-		return null;
+		return BusinessRule.getAllSetNames();
+	}
+	
+	@Override
+	public ArrayList<String> getAllTypeCodes() {
+		return BusinessRuleType.getAllCodes();
+	}
+	
+	@Override
+	public ArrayList<String> getAllCategoryNames() {
+		return Category.getAll();
 	}
 
 }
