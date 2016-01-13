@@ -8,14 +8,15 @@ public class BusinessRuleType {
 	private String description;
 	private String example;
 	private Category category;
+	private CodeType codeType;
 	
 	
-	
-	public BusinessRuleType(String code, String description, String example, Category category) {
+	public BusinessRuleType(String code, String description, String example, Category category, CodeType codeType) {
 		this.code = code;
 		this.description = description;
 		this.example = example;
 		this.category = category;
+		this.codeType = codeType;
 	}
 	public String getCode() {
 		return code;
@@ -40,6 +41,12 @@ public class BusinessRuleType {
 	}
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+	public void setCodeType(CodeType codeType){
+		this.codeType = codeType;
+	}
+	public CodeType getCodeType(){
+		return codeType;
 	}
 	
 	// ---- for retrieving from database

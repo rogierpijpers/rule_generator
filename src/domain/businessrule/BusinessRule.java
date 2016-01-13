@@ -12,52 +12,52 @@ public abstract class BusinessRule {
 	private String name;
 	private String failureMessage;
 	private BusinessRuleType type;
-	private CodeType codeType;
-	
-	public void setCodeType(CodeType codeType){
-		this.codeType = codeType;
-	}
-	public CodeType getCodeType(){
-		return codeType;
-	}
-	
+
 	public String getCode() {
 		return code;
 	}
+
 	public void setCode(String code) {
 		this.code = code;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getFailureMessage() {
 		return failureMessage;
 	}
+
 	public void setFailureMessage(String failureMessage) {
 		this.failureMessage = failureMessage;
 	}
+
 	public BusinessRuleType getType() {
 		return type;
 	}
+
 	public void setType(BusinessRuleType type) {
 		this.type = type;
 	}
-	
+
 	// ---- fill templates for generation
-	
+
 	public abstract ST fillTemplate(ST ruleTemplate);
-	
+
 	public abstract TargetDatabase getTargetDatabase();
-	
+
 	// ---- for retrieving from database
-	
-	public static ArrayList<RuleHolder> getAllCodesAndNames(){
+
+	public static ArrayList<RuleHolder> getAllCodesAndNames() {
 		return null;
 	}
-	public static BusinessRule getDetails(String code){
+
+	public static BusinessRule getDetails(String code) {
 		return null;
 	}
 }
