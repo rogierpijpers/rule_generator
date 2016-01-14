@@ -25,7 +25,7 @@ public class DatabaseConnection implements AutoCloseable{
 		try{
 			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 		}catch(SQLException e){
-			Logger.log(e);
+			Logger.log(e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -37,6 +37,7 @@ public class DatabaseConnection implements AutoCloseable{
 			Statement statement = connection.createStatement();
 			result = statement.executeQuery(sql);
 		}catch (SQLException e){
+			Logger.log(e.getMessage());
 			e.printStackTrace();
 		}
 		return result;
@@ -48,6 +49,7 @@ public class DatabaseConnection implements AutoCloseable{
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(sql);
 		}catch(SQLException e){
+			Logger.log(e.getMessage());
 			e.printStackTrace();
 		}
 	}

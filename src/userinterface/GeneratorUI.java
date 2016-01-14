@@ -143,7 +143,7 @@ public class GeneratorUI extends Application{
 				Platform.exit();
 			}
 		});
-		file.getItems().addAll(refresh, exitApp);
+		file.getItems().addAll(refresh, errorLog, exitApp);
 		
 		MenuItem targetSettings = new MenuItem("Target database");
 		targetSettings.setDisable(true);
@@ -220,7 +220,7 @@ public class GeneratorUI extends Application{
 			}
 			*/
 			controller.generateBusinessRules(rules, saveDir, execute);
-			MessageDialog succesDialog = new MessageDialog(primaryStage, "Rules are generated \nTo see if possible errors might have occured, see the errorlog (file-> Open errorlog)");
+			MessageDialog succesDialog = new MessageDialog(primaryStage, "Rules are generated, to see if possible errors might have occured, see the errorlog (file-> Open errorlog)");
 			succesDialog.show();
 		}else{
 			MessageDialog emptyDialog = new MessageDialog(primaryStage, "No rules are selected");
