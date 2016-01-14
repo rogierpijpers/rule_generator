@@ -1,5 +1,6 @@
 package userinterface;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
@@ -118,6 +119,24 @@ public class GeneratorUI extends Application{
 			}
 			
 		});
+		MenuItem errorLog = new MenuItem("Open errorlog");
+		errorLog.setOnAction(new EventHandler<ActionEvent>(){
+			public void handle(ActionEvent event){
+				File f = new File("errorLog.txt");
+				if(f.exists() && !f.isDirectory()) { 
+					if (Desktop.isDesktopSupported()) {
+					    	try {
+								Desktop.getDesktop().edit(f);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+					}
+				}else{
+					MessageDialog emptyDialog = new MessageDialog(primaryStage, "Errorlog doesn't exist yet...");
+					emptyDialog.show();
+				}
+			}
+		});
 		MenuItem exitApp = new MenuItem("Exit");
 		exitApp.setOnAction(new EventHandler<ActionEvent>(){
 			public void handle(ActionEvent event) {
@@ -201,7 +220,7 @@ public class GeneratorUI extends Application{
 			}
 			*/
 			controller.generateBusinessRules(rules, saveDir, execute);
-			MessageDialog succesDialog = new MessageDialog(primaryStage, "Rules are generated");
+			MessageDialog succesDialog = new MessageDialog(primaryStage, "Rules are generated \nTo see if possible errors might have occured, see the errorlog (file-> Open errorlog)");
 			succesDialog.show();
 		}else{
 			MessageDialog emptyDialog = new MessageDialog(primaryStage, "No rules are selected");

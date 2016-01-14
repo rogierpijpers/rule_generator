@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import data.utility.Logger;
+
 public class DatabaseConnection implements AutoCloseable{
 	private Connection connection;
 	
@@ -23,6 +25,7 @@ public class DatabaseConnection implements AutoCloseable{
 		try{
 			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 		}catch(SQLException e){
+			Logger.log(e);
 			e.printStackTrace();
 		}
 	}
