@@ -11,19 +11,23 @@ public class SetDAO {
 		
 	}
 	
-	public static ArrayList<String> getAllSetNames() {
+	public static ArrayList<String> getAllSetNames() throws Exception {
 		ArrayList<String> setNames = new ArrayList<String>();
-		
-		try (DatabaseConnection connection = new DatabaseConnection()) {
+		DatabaseConnection connection = null;		
+		try {
+			connection = new DatabaseConnection();
 			ResultSet result = connection.query("SELECT name FROM SETB ORDER BY id");
 			
 			while(result.next()){
 				setNames.add(result.getString(1));
 			}
 			result.close();
-			connection.close();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		finally{
+			connection.close();
 		}
 		
 		return setNames;

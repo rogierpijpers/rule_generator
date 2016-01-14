@@ -31,10 +31,11 @@ public class BusinessRuleDAO {
 
 	}
 
-	public static ArrayList<RuleHolder> getAllCodesAndNames() {
+	public static ArrayList<RuleHolder> getAllCodesAndNames() throws Exception {
 		ArrayList<RuleHolder> codesAndNames = new ArrayList<RuleHolder>();
-
-		try (DatabaseConnection connection = new DatabaseConnection()) {
+		DatabaseConnection connection = null;
+		try {
+			connection = new DatabaseConnection();
 			ResultSet result = connection
 					.query("SELECT code, name FROM BUSINESSRULE ORDER BY id");
 
@@ -43,19 +44,22 @@ public class BusinessRuleDAO {
 						.getString(2)));
 			}
 			result.close();
-			connection.close();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		finally{
+			connection.close();
+		}
 		return codesAndNames;
 	}
 
 	public static ArrayList<RuleHolder> getAllCodesAndNamesFromSet(
-			String setName) {
+			String setName) throws Exception{
 		ArrayList<RuleHolder> codesAndNames = new ArrayList<RuleHolder>();
-
-		try (DatabaseConnection connection = new DatabaseConnection()) {
+		DatabaseConnection connection = null;
+		try {
+			connection = new DatabaseConnection();
 			ResultSet result = connection
 					.query("SELECT BUSINESSRULE.code, BUSINESSRULE.name FROM BUSINESSRULE, BUSINESSRULESET, SETB where BUSINESSRULE.id = BUSINESSRULESET.BUSINESSRULEID and BUSINESSRULESET.SETID = SETB.ID and SETB.name = '"
 							+ setName + "' ORDER BY BUSINESSRULE.id");
@@ -65,15 +69,17 @@ public class BusinessRuleDAO {
 						result.getString("name")));
 			}
 			result.close();
-			connection.close();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		finally{
+			connection.close();
+		}
 		return codesAndNames;
 	}
 
-	public static BusinessRule getDetails(String ruleCode) {
+	public static BusinessRule getDetails(String ruleCode) throws Exception {
 		BusinessRule rule = null;
 
 		String businessruletypecode = getString("SELECT BT.code FROM BUSINESSRULE B, BUSINESSRULETYPE BT WHERE B.code = '"
@@ -187,29 +193,39 @@ public class BusinessRuleDAO {
 		return rule;
 	}
 
-	private static String getString(String query) {
+	private static String getString(String query)throws Exception {
 		ResultSet result;
-		try (DatabaseConnection connection = new DatabaseConnection()) {
+		DatabaseConnection connection = null;
+		try {
+			connection = new DatabaseConnection();
 			result = connection.query(query);
 			result.next();
 			result.close();
-			connection.close();
+			
 			return result.getString(1);
 		} catch (Exception e) {
 			return null;
 		}
+		finally{
+			connection.close();
+		}
 	}
 
-	private static double getDouble(String query) {
+	private static double getDouble(String query)throws Exception {
 		ResultSet result;
-		try (DatabaseConnection connection = new DatabaseConnection()) {
+		DatabaseConnection connection = null;
+		try{
+			connection = new DatabaseConnection();
 			result = connection.query(query);
 			result.next();
 			result.close();
-			connection.close();
+			
 			return result.getDouble(1);
 		} catch (Exception e) {
 			return -999999999;
+		}
+		finally{
+			connection.close();
 		}
 	}
 
@@ -239,11 +255,12 @@ public class BusinessRuleDAO {
 		return targetDatabase;
 	}
 
-	private static ArrayList<String> getListValues(String ruleCode) {
+	private static ArrayList<String> getListValues(String ruleCode) throws Exception{
 		ArrayList<String> listValues = new ArrayList<String>();
-
+		DatabaseConnection connection = null;
 		ResultSet result;
-		try (DatabaseConnection connection = new DatabaseConnection()) {
+		try {
+			connection = new DatabaseConnection();
 			result = connection
 					.query("SELECT L.value FROM BUSINESSRULE B, LISTVALUE L WHERE  BL.listvalueid = B.id AND B.code = '"
 							+ ruleCode + "'");
@@ -251,11 +268,13 @@ public class BusinessRuleDAO {
 				listValues.add(result.getString(1));
 			}
 			result.close();
-			connection.close();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		finally{
+			connection.close();
+		}
 		return listValues;
 	}
 }

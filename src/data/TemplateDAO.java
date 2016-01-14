@@ -10,9 +10,11 @@ public class TemplateDAO {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public TemplateDTO getTemplate(String name){
+	public TemplateDTO getTemplate(String name) throws Exception{
 		TemplateDTO template = null;
-		try(DatabaseConnection connection = new DatabaseConnection()){
+		DatabaseConnection connection = null;
+		try{
+			connection = new DatabaseConnection();
 			ResultSet result = connection.query("Select * from GeneratorTemplate where name = '"+name+"'");
 			if(result.next()){
 				String nm = result.getString("name");
@@ -21,9 +23,12 @@ public class TemplateDAO {
 				template = new TemplateDTO(nm, scr, arg);
 			}
 			result.close();
-			connection.close();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		finally{
+			connection.close();
 		}
 		return template;
 	}
