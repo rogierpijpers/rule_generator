@@ -108,6 +108,9 @@ public class GeneratorUI extends Application{
 		MenuItem refresh = new MenuItem("Refresh");
 		refresh.setOnAction(new EventHandler<ActionEvent>(){
 			public void handle(ActionEvent event) {
+				try{
+					set.getItems().addAll(controller.getAllSets());
+				}catch(NullPointerException e){};
 				list.setItems(getListViewItems(set.getValue()));
 			}
 			
