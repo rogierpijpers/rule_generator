@@ -7,11 +7,20 @@ public class TargetDAO {
 	}
 	
 	public void executeScript(String script) {
-		try(DatabaseConnection connection = new DatabaseConnection()){
+		DatabaseConnection connection = null;
+		try{
+			connection = new DatabaseConnection();
 			connection.insertQuery(script);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			try {
+				connection.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
