@@ -210,9 +210,11 @@ public class BusinessRuleDAO {
 			connection = new DatabaseConnection();
 			result = connection.query(query);
 			result.next();
+			
+			String resString = result.getString(1);
 			result.close();
 			
-			return result.getString(1);
+			return resString;
 		} catch (Exception e) {
 			return null;
 		}
@@ -233,9 +235,11 @@ public class BusinessRuleDAO {
 			connection = new DatabaseConnection();
 			result = connection.query(query);
 			result.next();
+
+			double resDouble = result.getDouble(1);
 			result.close();
 			
-			return result.getDouble(1);
+			return resDouble;
 		} catch (Exception e) {
 			return -999999999;
 		}
