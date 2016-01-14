@@ -20,6 +20,8 @@ public class SetDAO {
 			while(result.next()){
 				setNames.add(result.getString(1));
 			}
+			result.close();
+			connection.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

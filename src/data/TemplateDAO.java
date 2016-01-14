@@ -20,6 +20,8 @@ public class TemplateDAO {
 				String arg = result.getString("arguments");
 				template = new TemplateDTO(nm, scr, arg);
 			}
+			result.close();
+			connection.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

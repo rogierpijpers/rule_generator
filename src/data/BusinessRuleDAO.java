@@ -42,6 +42,8 @@ public class BusinessRuleDAO {
 				codesAndNames.add(new RuleHolder(result.getString(1), result
 						.getString(2)));
 			}
+			result.close();
+			connection.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -62,6 +64,8 @@ public class BusinessRuleDAO {
 				codesAndNames.add(new RuleHolder(result.getString("code"),
 						result.getString("name")));
 			}
+			result.close();
+			connection.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -188,6 +192,8 @@ public class BusinessRuleDAO {
 		try (DatabaseConnection connection = new DatabaseConnection()) {
 			result = connection.query(query);
 			result.next();
+			result.close();
+			connection.close();
 			return result.getString(1);
 		} catch (Exception e) {
 			return null;
@@ -199,6 +205,8 @@ public class BusinessRuleDAO {
 		try (DatabaseConnection connection = new DatabaseConnection()) {
 			result = connection.query(query);
 			result.next();
+			result.close();
+			connection.close();
 			return result.getDouble(1);
 		} catch (Exception e) {
 			return -999999999;
@@ -242,6 +250,8 @@ public class BusinessRuleDAO {
 			while (result.next()) {
 				listValues.add(result.getString(1));
 			}
+			result.close();
+			connection.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
