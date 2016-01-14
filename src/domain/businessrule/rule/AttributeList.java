@@ -42,13 +42,26 @@ public class AttributeList extends BusinessRule {
 	// ---- fill templates for generation
 	@Override
 	public ST fillTemplate(ST ruleTemplate) {
+		
 		Column column = (Column) this.getAttribute();
 		ruleTemplate.add("code", this.getCode());
 		ruleTemplate.add("targetTable", column.getTable().getName());
 		ruleTemplate.add("column", column.getName());
-		ruleTemplate.add("value", this.getValue());
+		ruleTemplate.add("value", this.getValueStr());
 
 		return ruleTemplate;
+	}
+	
+	private String getValueStr(){
+		String valueStr = "";
+		for(String val : value){
+			valueStr += "'"+val+"', ";
+		}
+		
+		if (valueStr.endsWith(", ")) {
+			valueStr = valueStr.substring(0, valueStr.length() - 2);
+		}
+		return valueStr;
 	}
 
 	@Override
