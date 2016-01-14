@@ -48,17 +48,19 @@ public class BusinessRuleDAO {
 
 		return codesAndNames;
 	}
-	
-	public static ArrayList<RuleHolder> getAllCodesAndNamesFromSet(String setName) {
+
+	public static ArrayList<RuleHolder> getAllCodesAndNamesFromSet(
+			String setName) {
 		ArrayList<RuleHolder> codesAndNames = new ArrayList<RuleHolder>();
 
 		try (DatabaseConnection connection = new DatabaseConnection()) {
 			ResultSet result = connection
-					.query("SELECT BUSINESSRULE.code, BUSINESSRULE.name FROM BUSINESSRULE, BUSINESSRULESET, SETB where BUSINESSRULE.id = BUSINESSRULESET.BUSINESSRULEID and BUSINESSRULESET.SETID = SETB.ID and SETB.name = '"+setName+"' ORDER BY BUSINESSRULE.id");
+					.query("SELECT BUSINESSRULE.code, BUSINESSRULE.name FROM BUSINESSRULE, BUSINESSRULESET, SETB where BUSINESSRULE.id = BUSINESSRULESET.BUSINESSRULEID and BUSINESSRULESET.SETID = SETB.ID and SETB.name = '"
+							+ setName + "' ORDER BY BUSINESSRULE.id");
 
 			while (result.next()) {
-				codesAndNames.add(new RuleHolder(result.getString("code"), result
-						.getString("name")));
+				codesAndNames.add(new RuleHolder(result.getString("code"),
+						result.getString("name")));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -113,15 +115,12 @@ public class BusinessRuleDAO {
 		String attribute1Name = getString("SELECT A.name FROM BUSINESSRULE B, ATTRIBUTE A WHERE B.attributeid1 = A.id AND B.code = '"
 				+ ruleCode + "'");
 		Table attribute1Table;
-		String attribute1TableName = getString("SELECT T.name FROM BUSINESSRULE B, ATTRIBUTE A, TABLE T WHERE B.attributeid1 = A.id AND A.tableid = T.id AND B.code = '"
+		String attribute1TableName = getString("SELECT T.name FROM BUSINESSRULE B, ATTRIBUTE A, TARGETTABLE T WHERE B.attributeid1 = A.id AND A.tableid = T.id AND B.code = '"
 				+ ruleCode + "'");
 		TargetDatabase attribute1TargetDatabase;
-		String attribute1TargetDatabaseName = getString("SELECT T.databasename FROM BUSINESSRULE B, ATTRIBUTE A, TABLE T WHERE B.attributeid1 = A.id AND A.tableid = T.id AND B.code = '"
+		String attribute1TargetDatabaseType = getString("SELECT T.databasetype FROM BUSINESSRULE B, ATTRIBUTE A, TARGETTABLE T WHERE B.attributeid1 = A.id AND A.tableid = T.id AND B.code = '"
 				+ ruleCode + "'");
-		String attribute1TargetDatabaseType = getString("SELECT T.databasetype FROM BUSINESSRULE B, ATTRIBUTE A, TABLE T WHERE B.attributeid1 = A.id AND A.tableid = T.id AND B.code = '"
-				+ ruleCode + "'");
-		attribute1TargetDatabase = parseToTargetDatabase(
-				attribute1TargetDatabaseName, attribute1TargetDatabaseType);
+		attribute1TargetDatabase = parseToTargetDatabase(attribute1TargetDatabaseType);
 		attribute1Table = new Table(attribute1TableName,
 				attribute1TargetDatabase);
 		attribute1 = new Column(attribute1Name, attribute1Table);
@@ -129,15 +128,12 @@ public class BusinessRuleDAO {
 		String attribute2Name = getString("SELECT A.name FROM BUSINESSRULE B, ATTRIBUTE A WHERE B.attributeid2 = A.id AND B.code = '"
 				+ ruleCode + "'");
 		Table attribute2Table;
-		String attribute2TableName = getString("SELECT T.name FROM BUSINESSRULE B, ATTRIBUTE A, TABLE T WHERE B.attributeid2 = A.id AND A.tableid = T.id AND B.code = '"
+		String attribute2TableName = getString("SELECT T.name FROM BUSINESSRULE B, ATTRIBUTE A, TARGETTABLE T WHERE B.attributeid2 = A.id AND A.tableid = T.id AND B.code = '"
 				+ ruleCode + "'");
 		TargetDatabase attribute2TargetDatabase;
-		String attribute2TargetDatabaseName = getString("SELECT T.databasename FROM BUSINESSRULE B, ATTRIBUTE A, TABLE T WHERE B.attributeid2 = A.id AND A.tableid = T.id AND B.code = '"
+		String attribute2TargetDatabaseType = getString("SELECT T.databasetype FROM BUSINESSRULE B, ATTRIBUTE A, TARGETTABLE T WHERE B.attributeid2 = A.id AND A.tableid = T.id AND B.code = '"
 				+ ruleCode + "'");
-		String attribute2TargetDatabaseType = getString("SELECT T.databasetype FROM BUSINESSRULE B, ATTRIBUTE A, TABLE T WHERE B.attributeid2 = A.id AND A.tableid = T.id AND B.code = '"
-				+ ruleCode + "'");
-		attribute2TargetDatabase = parseToTargetDatabase(
-				attribute2TargetDatabaseName, attribute2TargetDatabaseType);
+		attribute2TargetDatabase = parseToTargetDatabase(attribute2TargetDatabaseType);
 		attribute2Table = new Table(attribute2TableName,
 				attribute2TargetDatabase);
 		attribute2 = new Column(attribute2Name, attribute2Table);
@@ -194,7 +190,6 @@ public class BusinessRuleDAO {
 			result.next();
 			return result.getString(1);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return null;
 		}
 	}
@@ -206,7 +201,6 @@ public class BusinessRuleDAO {
 			result.next();
 			return result.getDouble(1);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return -999999999;
 		}
 	}
@@ -224,14 +218,14 @@ public class BusinessRuleDAO {
 		}
 	}
 
-	private static TargetDatabase parseToTargetDatabase(String databaseName,
-			String databaseType) {
+	private static TargetDatabase parseToTargetDatabase(String databaseType) {
 		TargetDatabase targetDatabase = null;
 
-		if (databaseType.equals("ORACLE")) {
-			targetDatabase = new OracleTargetDatabase();
-			targetDatabase.setName(databaseName);
-			targetDatabase.setType(DatabaseType.ORACLE);
+		if(databaseType != null){
+			if (databaseType.equals("ORACLE")) {
+				targetDatabase = new OracleTargetDatabase();
+				targetDatabase.setType(DatabaseType.ORACLE);
+			}
 		}
 
 		return targetDatabase;
@@ -239,18 +233,19 @@ public class BusinessRuleDAO {
 
 	private static ArrayList<String> getListValues(String ruleCode) {
 		ArrayList<String> listValues = new ArrayList<String>();
-		
+
 		ResultSet result;
 		try (DatabaseConnection connection = new DatabaseConnection()) {
-			result = connection.query("SELECT L.value FROM BUSINESSRULE B, BUSINESSRULE_LISTVALUE BL, LISTVALUE L WHERE BL.businessruleid = B.id AND BL.listvalueid = L.id AND B.code = '"
-				+ ruleCode + "'");
-			while(result.next()){
+			result = connection
+					.query("SELECT L.value FROM BUSINESSRULE B, BUSINESSRULE_LISTVALUE BL, LISTVALUE L WHERE BL.businessruleid = B.id AND BL.listvalueid = L.id AND B.code = '"
+							+ ruleCode + "'");
+			while (result.next()) {
 				listValues.add(result.getString(1));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return listValues;
 	}
 }
