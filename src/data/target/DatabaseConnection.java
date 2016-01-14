@@ -10,6 +10,7 @@ import data.utility.Logger;
 
 public class DatabaseConnection implements AutoCloseable{
 	private Connection connection;
+	private Statement statement;
 	
 	public DatabaseConnection() {
 		String URL = "jdbc:oracle:thin:@ondora02.hu.nl:8521:cursus02";
@@ -34,7 +35,7 @@ public class DatabaseConnection implements AutoCloseable{
 	public ResultSet query(String sql){
 		ResultSet result = null;
 		try{
-			Statement statement = connection.createStatement();
+			statement = connection.createStatement();
 			result = statement.executeQuery(sql);
 			statement.close();
 		}catch (SQLException e){
@@ -47,7 +48,7 @@ public class DatabaseConnection implements AutoCloseable{
 	//inserting data
 	public void insertQuery(String sql){
 		try{
-			Statement statement = connection.createStatement();
+			statement = connection.createStatement();
 			statement.executeUpdate(sql);
 			statement.close();
 		}catch(SQLException e){
@@ -59,9 +60,11 @@ public class DatabaseConnection implements AutoCloseable{
 	@Override
 	public void close() throws Exception {
 		try{
-			connection.close();
+			statement.close();
 		}catch(SQLException e){
 			e.printStackTrace();
+		}finally{
+			connection.close();
 		}
 		
 	}
