@@ -32,6 +32,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
+// SHOW BUSINESSRULE CODE & NAME NYI !!! --------------------------------------------------
+
 public class GeneratorUI extends Application{
 	private UIController controller;
 	private String saveDirectory;
@@ -50,7 +52,7 @@ public class GeneratorUI extends Application{
 			set.getItems().addAll(controller.getAllSets());
 		}catch(NullPointerException e){};
 		
-		ListView<RuleHolder> list = new ListView<RuleHolder>();
+		ListView<String> list = new ListView<String>();
 		if(set.getValue() != null){	
 			list.setItems(getListViewItems(set.getValue()));
 		}
@@ -76,7 +78,7 @@ public class GeneratorUI extends Application{
 		generateAll.setOnAction(new EventHandler<ActionEvent>(){
 			public void handle(ActionEvent event) {
 				if(set.getValue() != null){
-					ObservableList<RuleHolder> rules = getListViewItems(set.getValue());
+					ObservableList<String> rules = getListViewItems(set.getValue());
 					generateRules(primaryStage, rules, saveDirectory, execute.isSelected());
 				}
 			}
@@ -170,8 +172,13 @@ public class GeneratorUI extends Application{
 		primaryStage.show();
 	}
 	
-	private ObservableList<RuleHolder> getListViewItems(String setValue){
-		return controller.getRuleCodesAndNames(setValue);
+	private ObservableList<String> getListViewItems(String setValue){
+		ObservableList <String> ruleCodes = FXCollections.observableArrayList();
+		ObservableList<RuleHolder> holders = controller.getRuleCodesAndNames(setValue);
+		for(RuleHolder holder : holders){
+			ruleCodes.add(holder.getCode());
+		}
+		return ruleCodes;
 	}
 	
 	private String getApplicationPath(){
@@ -184,13 +191,15 @@ public class GeneratorUI extends Application{
 		return path;
 	}
 	
-	private void generateRules(Stage primaryStage, ObservableList<RuleHolder> rules, String saveDir, boolean execute){
-		ObservableList<String> codes = FXCollections.observableArrayList();
+	private void generateRules(Stage primaryStage, ObservableList<String> rules, String saveDir, boolean execute){
+		// ObservableList<String> codes = FXCollections.observableArrayList();
 		if(!rules.isEmpty()){
+			/*
 			for(RuleHolder holder : rules){
 				codes.add(holder.getCode());
 			}
-			controller.generateBusinessRules(codes, saveDir, execute);
+			*/
+			controller.generateBusinessRules(rules, saveDir, execute);
 			MessageDialog succesDialog = new MessageDialog(primaryStage, "Rules are generated");
 			succesDialog.show();
 		}else{

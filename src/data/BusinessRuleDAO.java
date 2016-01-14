@@ -57,8 +57,8 @@ public class BusinessRuleDAO {
 					.query("SELECT BUSINESSRULE.code, BUSINESSRULE.name FROM BUSINESSRULE, BUSINESSRULESET, SETB where BUSINESSRULE.id = BUSINESSRULESET.BUSINESSRULEID and BUSINESSRULESET.SETID = SETB.ID and SETB.name = '"+setName+"' ORDER BY BUSINESSRULE.id");
 
 			while (result.next()) {
-				codesAndNames.add(new RuleHolder(result.getString(1), result
-						.getString(2)));
+				codesAndNames.add(new RuleHolder(result.getString("code"), result
+						.getString("name")));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,7 +85,7 @@ public class BusinessRuleDAO {
 				+ ruleCode + "'");
 		double value = getDouble("SELECT value FROM BUSINESSRULE WHERE code = '"
 				+ ruleCode + "'");
-		String plSql = getString("SELECT plsql FROM BUSINESSRULES WHERE code = '"
+		String plSql = getString("SELECT plsql FROM BUSINESSRULE WHERE code = '"
 				+ ruleCode + "'");
 		Operator operator;
 		String operatorName = getString("SELECT O.name FROM BUSINESSRULE B, OPERATOR O WHERE B.operatorid = O.id AND B.code = '"
