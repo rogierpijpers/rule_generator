@@ -11,7 +11,7 @@ public class SetDAO {
 		
 	}
 	
-	public static ArrayList<String> getAllSetNames() throws Exception {
+	public static ArrayList<String> getAllSetNames(){
 		ArrayList<String> setNames = new ArrayList<String>();
 		DatabaseConnection connection = null;		
 		try {
@@ -27,7 +27,12 @@ public class SetDAO {
 			e.printStackTrace();
 		}
 		finally{
-			connection.close();
+			try {
+				connection.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		return setNames;

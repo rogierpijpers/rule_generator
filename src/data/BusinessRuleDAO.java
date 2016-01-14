@@ -31,7 +31,7 @@ public class BusinessRuleDAO {
 
 	}
 
-	public static ArrayList<RuleHolder> getAllCodesAndNames() throws Exception {
+	public static ArrayList<RuleHolder> getAllCodesAndNames(){
 		ArrayList<RuleHolder> codesAndNames = new ArrayList<RuleHolder>();
 		DatabaseConnection connection = null;
 		try {
@@ -49,13 +49,18 @@ public class BusinessRuleDAO {
 			e.printStackTrace();
 		}
 		finally{
-			connection.close();
+			try {
+				connection.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return codesAndNames;
 	}
 
 	public static ArrayList<RuleHolder> getAllCodesAndNamesFromSet(
-			String setName) throws Exception{
+			String setName){
 		ArrayList<RuleHolder> codesAndNames = new ArrayList<RuleHolder>();
 		DatabaseConnection connection = null;
 		try {
@@ -74,12 +79,17 @@ public class BusinessRuleDAO {
 			e.printStackTrace();
 		}
 		finally{
-			connection.close();
+			try {
+				connection.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return codesAndNames;
 	}
 
-	public static BusinessRule getDetails(String ruleCode) throws Exception {
+	public static BusinessRule getDetails(String ruleCode){
 		BusinessRule rule = null;
 
 		String businessruletypecode = getString("SELECT BT.code FROM BUSINESSRULE B, BUSINESSRULETYPE BT WHERE B.code = '"
@@ -193,7 +203,7 @@ public class BusinessRuleDAO {
 		return rule;
 	}
 
-	private static String getString(String query)throws Exception {
+	private static String getString(String query){
 		ResultSet result;
 		DatabaseConnection connection = null;
 		try {
@@ -207,11 +217,16 @@ public class BusinessRuleDAO {
 			return null;
 		}
 		finally{
-			connection.close();
+			try {
+				connection.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
-	private static double getDouble(String query)throws Exception {
+	private static double getDouble(String query){
 		ResultSet result;
 		DatabaseConnection connection = null;
 		try{
@@ -225,7 +240,12 @@ public class BusinessRuleDAO {
 			return -999999999;
 		}
 		finally{
-			connection.close();
+			try {
+				connection.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -255,7 +275,7 @@ public class BusinessRuleDAO {
 		return targetDatabase;
 	}
 
-	private static ArrayList<String> getListValues(String ruleCode) throws Exception{
+	private static ArrayList<String> getListValues(String ruleCode){
 		ArrayList<String> listValues = new ArrayList<String>();
 		DatabaseConnection connection = null;
 		ResultSet result;
@@ -273,7 +293,12 @@ public class BusinessRuleDAO {
 			e.printStackTrace();
 		}
 		finally{
-			connection.close();
+			try {
+				connection.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return listValues;
 	}

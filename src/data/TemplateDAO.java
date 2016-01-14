@@ -10,7 +10,7 @@ public class TemplateDAO {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public TemplateDTO getTemplate(String name) throws Exception{
+	public TemplateDTO getTemplate(String name){
 		TemplateDTO template = null;
 		DatabaseConnection connection = null;
 		try{
@@ -28,7 +28,12 @@ public class TemplateDAO {
 			e.printStackTrace();
 		}
 		finally{
-			connection.close();
+			try {
+				connection.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return template;
 	}
