@@ -237,7 +237,7 @@ public class BusinessRuleDAO {
 		ResultSet result;
 		try (DatabaseConnection connection = new DatabaseConnection()) {
 			result = connection
-					.query("SELECT L.value FROM BUSINESSRULE B, BUSINESSRULE_LISTVALUE BL, LISTVALUE L WHERE BL.businessruleid = B.id AND BL.listvalueid = L.id AND B.code = '"
+					.query("SELECT L.value FROM BUSINESSRULE B, LISTVALUE L WHERE  BL.listvalueid = B.id AND B.code = '"
 							+ ruleCode + "'");
 			while (result.next()) {
 				listValues.add(result.getString(1));
