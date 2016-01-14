@@ -5,8 +5,9 @@ import domain.businessrule.database.Attribute;
 public class Value extends Attribute{
 	private AttributeType type;
 	
-	public Value(String name){
+	public Value(String name, AttributeType type){
 		super(name);
+		this.type = type;
 	}
 
 	public AttributeType getType() {
