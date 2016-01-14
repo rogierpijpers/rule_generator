@@ -61,7 +61,7 @@ public abstract class BusinessRule {
 	}
 	
 	public static ArrayList<RuleHolder> getCodesAndNamesFromSet(String setName){
-		return null;
+		return BusinessRuleDAO.getAllCodesAndNamesFromSet(setName);
 	}
 	
 	public static ArrayList<String> getAllSetNames(){

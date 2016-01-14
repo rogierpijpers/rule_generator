@@ -48,6 +48,24 @@ public class BusinessRuleDAO {
 
 		return codesAndNames;
 	}
+	
+	public static ArrayList<RuleHolder> getAllCodesAndNamesFromSet(String setName) {
+		ArrayList<RuleHolder> codesAndNames = new ArrayList<RuleHolder>();
+
+		try (DatabaseConnection connection = new DatabaseConnection()) {
+			ResultSet result = connection
+					.query("SELECT BUSINESSRULE.code, BUSINESSRULE.name FROM BUSINESSRULE, BUSINESSRULESET, SETB where BUSINESSRULE.id = BUSINESSRULESET.BUSINESSRULEID and BUSINESSRULESET.SETID = SETB.ID and SETB.name = '"+ setName +"' ORDER BY id");
+
+			while (result.next()) {
+				codesAndNames.add(new RuleHolder(result.getString(1), result
+						.getString(2)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return codesAndNames;
+	}
 
 	public static BusinessRule getDetails(String ruleCode) {
 		BusinessRule rule = null;
