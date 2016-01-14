@@ -111,6 +111,7 @@ public class GeneratorUI extends Application{
 		refresh.setOnAction(new EventHandler<ActionEvent>(){
 			public void handle(ActionEvent event) {
 				try{
+					set.getItems().clear();
 					set.getItems().addAll(controller.getAllSets());
 				}catch(NullPointerException e){};
 				list.setItems(getListViewItems(set.getValue()));
