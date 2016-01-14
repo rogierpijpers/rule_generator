@@ -1,5 +1,7 @@
 package domain.businessrule.rule;
 
+import java.util.ArrayList;
+
 import org.stringtemplate.v4.ST;
 
 import domain.businessrule.BusinessRule;
@@ -10,9 +12,9 @@ import domain.businessrule.database.TargetDatabase;
 
 public class AttributeList extends BusinessRule {
 	private Attribute attribute;
-	private String value;
+	private ArrayList<String> value;
 
-	public AttributeList(String code, String name, Attribute attribute, BusinessRuleType businessRuleType, String value) {
+	public AttributeList(String code, String name, Attribute attribute, BusinessRuleType businessRuleType, ArrayList<String> value) {
 		super.setCode(code);
 		super.setName(name);
 		super.setType(businessRuleType);
@@ -28,11 +30,11 @@ public class AttributeList extends BusinessRule {
 		this.attribute = attribute;
 	}
 	
-	public String getValue() {
+	public ArrayList<String> getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(ArrayList<String> value) {
 		this.value = value;
 	}
 	
