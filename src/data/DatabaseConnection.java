@@ -37,7 +37,6 @@ public class DatabaseConnection implements AutoCloseable{
 		try{
 			statement = connection.createStatement();
 			result = statement.executeQuery(sql);
-			statement.close();
 		}catch (SQLException e){
 			Logger.log(e.getMessage());
 			e.printStackTrace();
@@ -50,7 +49,6 @@ public class DatabaseConnection implements AutoCloseable{
 		try{
 			statement = connection.createStatement();
 			statement.executeUpdate(sql);
-			statement.close();
 		}catch(SQLException e){
 			Logger.log(e.getMessage());
 			e.printStackTrace();
