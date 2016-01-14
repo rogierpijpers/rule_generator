@@ -12,13 +12,15 @@ import domain.businessrule.database.TargetDatabase;
 
 public class AttributeList extends BusinessRule {
 	private Attribute attribute;
+	private Operator operator;
 	private ArrayList<String> value;
 
-	public AttributeList(String code, String name, Attribute attribute, BusinessRuleType businessRuleType, ArrayList<String> value) {
+	public AttributeList(String code, String name, Attribute attribute, Operator operator, BusinessRuleType businessRuleType, ArrayList<String> value) {
 		super.setCode(code);
 		super.setName(name);
 		super.setType(businessRuleType);
 		this.attribute = attribute;
+		this.operator = operator;
 		this.value = value;
 	}
 
@@ -38,6 +40,14 @@ public class AttributeList extends BusinessRule {
 		this.value = value;
 	}
 	
+	public Operator getOperator() {
+		return operator;
+	}
+
+	public void setOperator(Operator operator) {
+		this.operator = operator;
+	}
+	
 
 	// ---- fill templates for generation
 	@Override
@@ -47,6 +57,7 @@ public class AttributeList extends BusinessRule {
 		ruleTemplate.add("code", this.getCode());
 		ruleTemplate.add("targetTable", column.getTable().getName());
 		ruleTemplate.add("column", column.getName());
+		ruleTemplate.add("operator", operator.getCharacter());
 		ruleTemplate.add("value", this.getValueStr());
 
 		return ruleTemplate;
@@ -69,5 +80,7 @@ public class AttributeList extends BusinessRule {
 		Column column = (Column) this.getAttribute();
 		return column.getTable().getTargetDatabase();
 	}
+
+	
 
 }

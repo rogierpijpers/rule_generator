@@ -154,7 +154,7 @@ public class BusinessRuleDAO {
 					businessRuleType, attribute1);
 			break;
 		case "ALIS":
-			rule = new AttributeList(code, name, attribute1, businessRuleType,
+			rule = new AttributeList(code, name, attribute1, operator, businessRuleType,
 					listValues);
 			break;
 		case "AOTH":
