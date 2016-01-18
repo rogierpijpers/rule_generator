@@ -9,11 +9,11 @@ import domain.businessrule.database.Column;
 import domain.businessrule.database.TargetDatabase;
 
 public class AttributeCompare extends BusinessRule {
-	private double value;
+	private String value;
 	private Operator operator;
 	private Attribute attribute;
 
-	public AttributeCompare(String code, String name, double value, Operator operator, BusinessRuleType businessRuleType, Attribute attribute) {
+	public AttributeCompare(String code, String name, String value, Operator operator, BusinessRuleType businessRuleType, Attribute attribute) {
 		super.setCode(code);
 		super.setName(name);
 		super.setType(businessRuleType);
@@ -30,11 +30,11 @@ public class AttributeCompare extends BusinessRule {
 		this.attribute = attribute;
 	}
 
-	public double getValue() {
+	public String getValue() {
 		return value;
 	}
 
-	public void setValue(double value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 

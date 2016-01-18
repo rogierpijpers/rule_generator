@@ -9,12 +9,12 @@ import domain.businessrule.database.Column;
 import domain.businessrule.database.TargetDatabase;
 
 public class AttributeRange extends BusinessRule{
-	private double minValue;
-	private double maxValue;
+	private String minValue;
+	private String maxValue;
 	private Operator operator;
 	private Attribute attribute;
 
-	public AttributeRange(String code, String name, double minValue, double maxValue, Operator operator, BusinessRuleType businessRuleType, Attribute attribute){
+	public AttributeRange(String code, String name, String minValue, String maxValue, Operator operator, BusinessRuleType businessRuleType, Attribute attribute){
 		super.setCode(code);
 		super.setName(name);
 		super.setType(businessRuleType);
@@ -25,21 +25,21 @@ public class AttributeRange extends BusinessRule{
 	}
 	
 
-	public double getMinValue() {
+	public String getMinValue() {
 		return minValue;
 	}
 
-	public void setMinValue(double minValue) {
+	public void setMinValue(String minValue) {
 		this.minValue = minValue;
 	}
 
 
-	public double getMaxValue() {
+	public String  getMaxValue() {
 		return maxValue;
 	}
 
 
-	public void setMaxValue(double maxValue) {
+	public void setMaxValue(String maxValue) {
 		this.maxValue = maxValue;
 	}
 
