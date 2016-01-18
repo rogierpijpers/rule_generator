@@ -9,6 +9,7 @@ import domain.businessrule.rule.AttributeList;
 import domain.businessrule.rule.AttributeOther;
 import domain.businessrule.rule.AttributeRange;
 import domain.businessrule.rule.TupleCompare;
+import domain.businessrule.rule.TupleOther;
 
 public class OracleScriptBuilder implements ScriptBuilder {
 	private TemplateBuilder templateBuilder;
@@ -73,7 +74,14 @@ public class OracleScriptBuilder implements ScriptBuilder {
 			template.add("column2", TCMPcolumn2.getName());
 			break;
 		case "TOTH":
-			
+			TupleOther TOTHrule = (TupleOther) businessRule;
+			Column TOTHcolumn1 = (Column) TOTHrule.getAttribute1();
+			Column TOTHcolumn2 = (Column) TOTHrule.getAttribute2();
+			template.add("targetTable", TOTHcolumn1.getTable());
+			template.add("targetColumn1", TOTHcolumn1.getName());
+			template.add("targetColumn2", TOTHcolumn2.getName());
+			template.add("plsql", TOTHrule.getPlsql());
+			template.add("failureMessage", TOTHrule.getFailureMessage());
 			break;
 		case "ICMP":
 			

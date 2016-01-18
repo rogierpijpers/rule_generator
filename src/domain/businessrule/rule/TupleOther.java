@@ -13,14 +13,18 @@ public class TupleOther extends BusinessRule {
 
 	private String code;
 	private String name;
-	private ArrayList<Attribute> attributes;
+	private Attribute attribute1;
+	private Attribute attribute2;
+	private String plsql;
 
 	public TupleOther(String code, String name,
-			BusinessRuleType businessRuleType, ArrayList<Attribute> attributes) {
+			BusinessRuleType businessRuleType, Attribute attribute1, Attribute attribute2, String plsql) {
 		super.setCode(code);
 		super.setName(name);
 		super.setType(businessRuleType);
-		attributes = new ArrayList<Attribute>();
+		this.attribute1 = attribute1;
+		this.attribute2 = attribute2;
+		this.plsql = plsql;
 	}
 
 	public String getCode() {
@@ -39,14 +43,29 @@ public class TupleOther extends BusinessRule {
 		this.name = name;
 	}
 
-	public ArrayList<Attribute> getAttribute() {
-		return attributes;
+	public Attribute getAttribute1() {
+		return attribute1;
 	}
 
-	public void setAttribute(ArrayList<Attribute> attribute) {
-		this.attributes = attribute;
+	public void setAttribute1(Attribute attribute1) {
+		this.attribute1 = attribute1;
 	}
 
+	public Attribute getAttribute2() {
+		return attribute2;
+	}
+
+	public void setAttribute2(Attribute attribute2) {
+		this.attribute2 = attribute2;
+	}
+
+	public String getPlsql() {
+		return plsql;
+	}
+
+	public void setPlsql(String plsql) {
+		this.plsql = plsql;
+	}
 
 	@Override
 	public TargetDatabase getTargetDatabase() {
