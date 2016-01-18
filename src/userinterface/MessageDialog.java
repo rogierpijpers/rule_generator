@@ -37,7 +37,7 @@ public class MessageDialog extends Stage {
 		root.setCenter(center);
 		root.setBottom(bottom);
 
-		Scene scene = new Scene(root, 300, 100);
+		Scene scene = new Scene(root, 350, 150);
 		this.setScene(scene);
 	}
 
