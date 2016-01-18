@@ -57,12 +57,6 @@ public class TupleCompare extends BusinessRule {
 		this.attributes = attribute;
 	}
 
-	// ---- fill templates for generation
-	@Override
-	public ST fillTemplate(ST ruleTemplate) {
-
-		return null;
-	}
 
 	@Override
 	public TargetDatabase getTargetDatabase() {

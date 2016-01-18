@@ -50,8 +50,6 @@ public abstract class BusinessRule {
 
 	// ---- fill templates for generation
 
-	public abstract ST fillTemplate(ST ruleTemplate);
-
 	public abstract TargetDatabase getTargetDatabase();
 
 	// ---- for retrieving from database

@@ -48,22 +48,9 @@ public class AttributeList extends BusinessRule {
 		this.operator = operator;
 	}
 	
-
-	// ---- fill templates for generation
-	@Override
-	public ST fillTemplate(ST ruleTemplate) {
-		
-		Column column = (Column) this.getAttribute();
-		ruleTemplate.add("code", this.getCode());
-		ruleTemplate.add("targetTable", column.getTable().getName());
-		ruleTemplate.add("column", column.getName());
-		ruleTemplate.add("operator", operator.getCharacter());
-		ruleTemplate.add("value", this.getValueStr());
-
-		return ruleTemplate;
-	}
 	
-	private String getValueStr(){
+	
+	public String getValueStr(){
 		String valueStr = "";
 		for(String val : value){
 			valueStr += "'"+val+"', ";

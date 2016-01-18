@@ -46,17 +46,6 @@ public class AttributeCompare extends BusinessRule {
 		this.operator = operator;
 	}
 
-	// ---- fill templates for generation
-	@Override
-	public ST fillTemplate(ST ruleTemplate) {
-		Column column = (Column) this.getAttribute();
-		ruleTemplate.add("code", this.getCode());
-		ruleTemplate.add("targetTable", column.getTable().getName());
-		ruleTemplate.add("column", column.getName());
-		ruleTemplate.add("operator", this.getOperator().getCharacter());
-		ruleTemplate.add("value", this.getValue());
-		return ruleTemplate;
-	}
 
 	@Override
 	public TargetDatabase getTargetDatabase() {

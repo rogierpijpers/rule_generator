@@ -37,17 +37,6 @@ public class AttributeOther extends BusinessRule {
 		this.plsql = plsql;
 	}
 
-	// ---- fill templates for generation
-	@Override
-	public ST fillTemplate(ST ruleTemplate) {
-		
-		 Column column = (Column) this.getAttribute();
-		 ruleTemplate.add("code", this.getCode());
-		 ruleTemplate.add("targetTable", column.getTable().getName());
-		 ruleTemplate.add("plsql", this.getPlsql());
-
-		return ruleTemplate;
-	}
 
 	@Override
 	public TargetDatabase getTargetDatabase() {

@@ -62,21 +62,6 @@ public class AttributeRange extends BusinessRule{
 	public void setAttribute(Value attribute) {
 		this.attribute = attribute;
 	}
-	
-
-
-	// ---- fill templates for generation
-	@Override
-	public ST fillTemplate(ST ruleTemplate) {
-		Column column = (Column) this.getAttribute();
-		ruleTemplate.add("code", this.getCode());
-		ruleTemplate.add("targetTable", column.getTable().getName());
-		ruleTemplate.add("column", column.getName());
-		ruleTemplate.add("operator", this.getOperator().getCharacter());
-		ruleTemplate.add("minValue", this.getMinValue());
-		ruleTemplate.add("maxValue", this.getMaxValue());
-		return ruleTemplate;
-	}
 
 
 	@Override
