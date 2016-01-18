@@ -14,15 +14,17 @@ public class TupleCompare extends BusinessRule {
 	private String code;
 	private String name;
 	private Operator operator;
-	private ArrayList<Attribute> attributes;
+	private Attribute attribute1;
+	private Attribute attribute2;
 
 	public TupleCompare(String code, String name, Operator operator,
-			BusinessRuleType businessRuleType, ArrayList<Attribute> attributes) {
+			BusinessRuleType businessRuleType, Attribute attribute1, Attribute attribute2) {
 		super.setCode(code);
 		super.setName(name);
 		this.operator = operator;
 		super.setType(businessRuleType);
-		attributes = new ArrayList<Attribute>();
+		this.setAttribute1(attribute1);
+		this.setAttribute2(attribute2);
 	}
 
 	public String getCode() {
@@ -48,19 +50,27 @@ public class TupleCompare extends BusinessRule {
 	public void setOperator(Operator operator) {
 		this.operator = operator;
 	}
-
-	public ArrayList<Attribute> getAttribute() {
-		return attributes;
+	
+	public Attribute getAttribute1() {
+		return attribute1;
 	}
 
-	public void setAttribute(ArrayList<Attribute> attribute) {
-		this.attributes = attribute;
+	public void setAttribute1(Attribute attribute1) {
+		this.attribute1 = attribute1;
 	}
 
+	public Attribute getAttribute2() {
+		return attribute2;
+	}
+
+	public void setAttribute2(Attribute attribute2) {
+		this.attribute2 = attribute2;
+	}
 
 	@Override
 	public TargetDatabase getTargetDatabase() {
 		return null;
 	}
+
 
 }

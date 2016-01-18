@@ -8,6 +8,7 @@ import domain.businessrule.rule.AttributeCompare;
 import domain.businessrule.rule.AttributeList;
 import domain.businessrule.rule.AttributeOther;
 import domain.businessrule.rule.AttributeRange;
+import domain.businessrule.rule.TupleCompare;
 
 public class OracleScriptBuilder implements ScriptBuilder {
 	private TemplateBuilder templateBuilder;
@@ -61,6 +62,27 @@ public class OracleScriptBuilder implements ScriptBuilder {
 			Column AOTHcolumn = (Column) AOTHrule.getAttribute();
 			template.add("targetTable", AOTHcolumn.getTable().getName());
 			template.add("plsql", AOTHrule.getPlsql());
+			break;
+		case "TCMP":
+			TupleCompare TCMPrule = (TupleCompare) businessRule;
+			Column TCMPcolumn1 = (Column) TCMPrule.getAttribute1();
+			Column TCMPcolumn2 = (Column) TCMPrule.getAttribute2();
+			template.add("targetTable", TCMPcolumn1.getTable());
+			template.add("column1", TCMPcolumn1.getName());
+			template.add("operator", TCMPrule.getOperator().getCharacter());
+			template.add("column2", TCMPcolumn2.getName());
+			break;
+		case "TOTH":
+			
+			break;
+		case "ICMP":
+			
+			break;
+		case "EOTH":
+			
+			break;
+		case "MODI":
+			
 			break;
 		}
 		
