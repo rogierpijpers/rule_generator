@@ -32,24 +32,21 @@ public class BusinessRuleDAO {
 
 	}
 
-	public static ArrayList<RuleHolder> getAllCodesAndNames(){
+	public static ArrayList<RuleHolder> getAllCodesAndNames() {
 		ArrayList<RuleHolder> codesAndNames = new ArrayList<RuleHolder>();
 		DatabaseConnection connection = null;
 		try {
 			connection = new DatabaseConnection();
-			ResultSet result = connection
-					.query("SELECT code, name FROM BUSINESSRULE ORDER BY id");
+			ResultSet result = connection.query("SELECT code, name FROM BUSINESSRULE ORDER BY id");
 
 			while (result.next()) {
-				codesAndNames.add(new RuleHolder(result.getString(1), result
-						.getString(2)));
+				codesAndNames.add(new RuleHolder(result.getString(1), result.getString(2)));
 			}
 			result.close();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally{
+		} finally {
 			try {
 				connection.close();
 			} catch (Exception e) {
@@ -60,8 +57,7 @@ public class BusinessRuleDAO {
 		return codesAndNames;
 	}
 
-	public static ArrayList<RuleHolder> getAllCodesAndNamesFromSet(
-			String setName){
+	public static ArrayList<RuleHolder> getAllCodesAndNamesFromSet(String setName) {
 		ArrayList<RuleHolder> codesAndNames = new ArrayList<RuleHolder>();
 		DatabaseConnection connection = null;
 		try {
@@ -71,15 +67,13 @@ public class BusinessRuleDAO {
 							+ setName + "' ORDER BY BUSINESSRULE.id");
 
 			while (result.next()) {
-				codesAndNames.add(new RuleHolder(result.getString("code"),
-						result.getString("name")));
+				codesAndNames.add(new RuleHolder(result.getString("code"), result.getString("name")));
 			}
 			result.close();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally{
+		} finally {
 			try {
 				connection.close();
 			} catch (Exception e) {
@@ -89,151 +83,147 @@ public class BusinessRuleDAO {
 		}
 		return codesAndNames;
 	}
-	/*
-	 * Wordt aan gewerkt en verbeterd, geen paniek rogier ;)
-	 */
-	public static BusinessRule getDetails(String ruleCode){
 
-		Operator operator;
-		BusinessRuleType businessRuleType;
-		Category category;
-		BusinessRule rule;
-		
+	/*
+	 * Wordt aan gewerkt en verbetert, geen paniek rogier ;)
+	 */
+	public static BusinessRule getDetails(String ruleCode) {
+
+		Operator operator = null;
+		BusinessRuleType businessRuleType = null;
+		Category category = null;
+		BusinessRule rule = null;
+		Attribute attribute1 = null, attribute2 = null;
+		Table attribute1Table = null, attribute2Table = null;
+		TargetDatabase attribute1TargetDatabase = null, attribute2TargetDatabase = null;
 		DatabaseConnection connection = null;
-				
+
+		int id, operatorID = 0, businessRuleTypeID = 0, attributeID1 = 0, attributeID2 = 0, categoryID = 0,
+				tableID1 = 0, tableID2 = 0;
+		String name = null, code = null, failureMessage = null, minValue = null, maxValue = null, value = null,
+				plSql = null, businessRuleTypeCode = null, attribute1Name = null, attribute2Name = null,
+				attribute1TableName = null, attribute2TableName = null, attribute1TargetDatabaseType = null,
+				attribute2TargetDatabaseType = null;
+		ArrayList<String> listValues = getListValues(ruleCode);
+		ArrayList<Attribute> attributes = new ArrayList<Attribute>();
+
 		String query = "SELECT * FROM BUSINESSRULE WHERE code = '" + ruleCode + "'";
-		 try{
+		try {
 			connection = new DatabaseConnection();
 			ResultSet result = connection.query(query);
-			while(result.next()){
-				int id = result.getInt(1);
-				String name = result.getString(2);
-				String code = result.getString(3);
-				String failureMessage = result.getString(4);
-				double minValue = result.getDouble(5);
-				double maxValue = result.getDouble(6);
-				double value = result.getDouble(7);
-				String plSql = result.getString(8);
-				int operatorID = result.getInt(9);
-				int businessRuleTypeID = result.getInt(10);
-				int attributeID1 = result.getInt(11);
-				int attributeID2 = result.getInt(12);
-				
-				
+			while (result.next()) {
+				id = result.getInt(1);
+				name = result.getString(2);
+				code = result.getString(3);
+				failureMessage = result.getString(4);
+				minValue = result.getString(5);
+				maxValue = result.getString(6);
+				value = result.getString(7);
+				plSql = result.getString(8);
+				operatorID = result.getInt(9);
+				businessRuleTypeID = result.getInt(10);
+				attributeID1 = result.getInt(11);
+				attributeID2 = result.getInt(12);
 			}
-			
-			query = "SELECT * FROM BUSINESSRULE B, OPERATOR O WHERE B.operatorid = O.id AND B.code = '"+ ruleCode + "'";
+
+			query = "SELECT * FROM OPERATOR WHERE ID = '" + operatorID + "'";
 			result = connection.query(query);
-			while(result.next()){
+			while (result.next()) {
 				String operatorName = result.getString(2);
 				String operatorCharacter = result.getString(3);
 				operator = new Operator(operatorName, operatorCharacter);
-				//ergens aan toevoegen
+
 			}
-			query = "SELECT * FROM BUSINESSRULE B, BUSINESSRULETYPE BT WHERE B.businessruletypeid = BT.id AND B.code = '"
-					+ ruleCode + "'";
+			query = "SELECT * FROM BUSINESSRULETYPE WHERE ID = '" + businessRuleTypeID + "'";
 			result = connection.query(query);
-			while(result.next()){
-				String businessRuleTypeCode = result.getString(2);
+			while (result.next()) {
+				businessRuleTypeCode = result.getString(2);
 				String businessRuleTypeDescription = result.getString(3);
 				String businessRuleTypeExample = result.getString(4);
 				CodeType businessRuleTypeCodeType = parseToCodeType(result.getString(5));
-				businessRuleType = new BusinessRuleType(businessRuleTypeCode,
-						businessRuleTypeDescription, businessRuleTypeExample, category,
-						businessRuleTypeCodeType);
-				//ergens aan toevoegen
+				categoryID = result.getInt(6);
+				businessRuleType = new BusinessRuleType(businessRuleTypeCode, businessRuleTypeDescription,
+						businessRuleTypeExample, category, businessRuleTypeCodeType);
+
 			}
-			query = "SELECT C.name FROM BUSINESSRULE B, BUSINESSRULETYPE BT, CATEGORY C WHERE B.businessruletypeid = BT.id AND BT.categoryid = C.id AND B.code = '"
-					+ ruleCode + "'";
+			query = "SELECT * FROM CATEGORY WHERE ID = '" + categoryID + "'";
 			result = connection.query(query);
-			while(result.next()){
+			while (result.next()) {
 				String categoryName = result.getString(2);
 				category = new Category(categoryName);
-				//ergens toevoegen
+
 			}
-			query = "SELECT A.name FROM BUSINESSRULE B, ATTRIBUTE A WHERE B.attributeid1 = A.id AND B.code = '"
-					+ ruleCode + "'";
+			query = "SELECT * FROM ATTRIBUTE WHERE ID = '" + attributeID1 + "'";
 			result = connection.query(query);
-			while (result.next()){
-				String attribute1Name = result.getString(2);
+			while (result.next()) {
+				attribute1Name = result.getString(2);
+				int attributeTypeID = result.getInt(3);
+				tableID1 = result.getInt(4);
+
 			}
-			
-		 }
-		 catch(Exception e){
-			 e.printStackTrace();
-		 }
-		 finally{
-			 connection.close();
-		 }
-		
-		
-		
-		Attribute attribute1;
-		String attribute1Name = getString("SELECT A.name FROM BUSINESSRULE B, ATTRIBUTE A WHERE B.attributeid1 = A.id AND B.code = '"
-				+ ruleCode + "'");
-		
-		Table attribute1Table;
-		String attribute1TableName = getString("SELECT T.name FROM BUSINESSRULE B, ATTRIBUTE A, TARGETTABLE T WHERE B.attributeid1 = A.id AND A.tableid = T.id AND B.code = '"
-				+ ruleCode + "'");
-		
-		TargetDatabase attribute1TargetDatabase;
-		String attribute1TargetDatabaseType = getString("SELECT T.databasetype FROM BUSINESSRULE B, ATTRIBUTE A, TARGETTABLE T WHERE B.attributeid1 = A.id AND A.tableid = T.id AND B.code = '"
-				+ ruleCode + "'");
-		attribute1TargetDatabase = parseToTargetDatabase(attribute1TargetDatabaseType);
-		attribute1Table = new Table(attribute1TableName,
-				attribute1TargetDatabase);
-		attribute1 = new Column(attribute1Name, attribute1Table);
-		
-		Attribute attribute2;
-		String attribute2Name = getString("SELECT A.name FROM BUSINESSRULE B, ATTRIBUTE A WHERE B.attributeid2 = A.id AND B.code = '"
-				+ ruleCode + "'");
-		
-		Table attribute2Table;
-		String attribute2TableName = getString("SELECT T.name FROM BUSINESSRULE B, ATTRIBUTE A, TARGETTABLE T WHERE B.attributeid2 = A.id AND A.tableid = T.id AND B.code = '"
-				+ ruleCode + "'");
-		
-		TargetDatabase attribute2TargetDatabase;
-		String attribute2TargetDatabaseType = getString("SELECT T.databasetype FROM BUSINESSRULE B, ATTRIBUTE A, TARGETTABLE T WHERE B.attributeid2 = A.id AND A.tableid = T.id AND B.code = '"
-				+ ruleCode + "'");
-		attribute2TargetDatabase = parseToTargetDatabase(attribute2TargetDatabaseType);
-		
-		attribute2Table = new Table(attribute2TableName,
-				attribute2TargetDatabase);
-		attribute2 = new Column(attribute2Name, attribute2Table);
+			query = "SELECT * FROM ATTRIBUTE WHERE ID = '" + attributeID2 + "'";
+			result = connection.query(query);
+			while (result.next()) {
+				attribute2Name = result.getString(2);
+				int attributeTypeID2 = result.getInt(3);
+				tableID2 = result.getInt(4);
 
-		ArrayList<String> listValues = getListValues(ruleCode);
+			}
+			query = "SELECT * FROM TARGETTABLE WHERE ID = '" + tableID1 + "'";
+			result = connection.query(query);
+			while (result.next()) {
+				attribute1TableName = result.getString(2);
+				attribute1TargetDatabase = parseToTargetDatabase(result.getString(3));
+				attribute1TargetDatabaseType = result.getString(4);
 
-		ArrayList<Attribute> attributes = new ArrayList<Attribute>();
+			}
+			query = "SELECT * FROM TARGETTABLE WHERE ID = '" + tableID2 + "'";
+			result = connection.query(query);
+			while (result.next()) {
+				attribute2TableName = result.getString(2);
+				attribute2TargetDatabase = parseToTargetDatabase(result.getString(3));
+				attribute2TargetDatabaseType = result.getString(4);
+			}
+
+			attribute1 = new Column(attribute1Name, attribute1Table);
+			attribute1Table = new Table(attribute1TableName, attribute1TargetDatabase);
+			attribute2 = new Column(attribute2Name, attribute2Table);
+			attribute2Table = new Table(attribute2TableName, attribute2TargetDatabase);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				connection.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		attributes.add(attribute1);
 		attributes.add(attribute2);
 
 		switch (businessRuleTypeCode) {
 		case "ARNG":
-			rule = new AttributeRange(code, name, minValue, maxValue, operator,
-					businessRuleType, attribute1);
+			rule = new AttributeRange(code, name, minValue, maxValue, operator, businessRuleType, attribute1);
 			break;
 		case "ACMP":
-			rule = new AttributeCompare(code, name, value, operator,
-					businessRuleType, attribute1);
+			rule = new AttributeCompare(code, name, value, operator, businessRuleType, attribute1);
 			break;
 		case "ALIS":
-			rule = new AttributeList(code, name, attribute1, operator, businessRuleType,
-					listValues);
+			rule = new AttributeList(code, name, attribute1, operator, businessRuleType, listValues);
 			break;
 		case "AOTH":
-			rule = new AttributeOther(code, name, businessRuleType, attribute1,
-					plSql);
+			rule = new AttributeOther(code, name, businessRuleType, attribute1, plSql);
 			break;
 		case "TCMP":
-			rule = new TupleCompare(code, name, operator, businessRuleType,
-					attributes);
+			rule = new TupleCompare(code, name, operator, businessRuleType, attribute1, attribute2);
 			break;
 		case "TOTH":
-			rule = new TupleOther(code, name, businessRuleType, attributes);
+			rule = new TupleOther(code, name, businessRuleType, attribute1, attribute2, plSql);
 			break;
 		case "ICMP":
-			rule = new InterEntityCompare(code, name, businessRuleType,
-					attributes);
+			rule = new InterEntityCompare(code, name, businessRuleType, attributes);
 			break;
 		case "EOTH":
 			rule = new EntityOther(code, name, businessRuleType, attributes);
@@ -246,56 +236,7 @@ public class BusinessRuleDAO {
 		return rule;
 	}
 
-	private static String getString(String query){
-		ResultSet result;
-		DatabaseConnection connection = null;
-		try {
-			connection = new DatabaseConnection();
-			result = connection.query(query);
-			result.next();
-			
-			String resString = result.getString(1);
-			result.close();
-			
-			return resString;
-		} catch (Exception e) {
-			return null;
-		}
-		finally{
-			try {
-				connection.close();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-
-	private static double getDouble(String query){
-		ResultSet result;
-		DatabaseConnection connection = null;
-		try{
-			connection = new DatabaseConnection();
-			result = connection.query(query);
-			result.next();
-
-			double resDouble = result.getDouble(1);
-			result.close();
-			
-			return resDouble;
-		} catch (Exception e) {
-			return -999999999;
-		}
-		finally{
-			try {
-				connection.close();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-
+	
 	private static CodeType parseToCodeType(String codeType) {
 		if (codeType == null || codeType.equals("")) {
 			return null;
@@ -312,7 +253,7 @@ public class BusinessRuleDAO {
 	private static TargetDatabase parseToTargetDatabase(String databaseType) {
 		TargetDatabase targetDatabase = null;
 
-		if(databaseType != null){
+		if (databaseType != null) {
 			if (databaseType.equals("ORACLE")) {
 				targetDatabase = new OracleTargetDatabase();
 				targetDatabase.setType(DatabaseType.ORACLE);
@@ -322,7 +263,7 @@ public class BusinessRuleDAO {
 		return targetDatabase;
 	}
 
-	private static ArrayList<String> getListValues(String ruleCode){
+	private static ArrayList<String> getListValues(String ruleCode) {
 		ArrayList<String> listValues = new ArrayList<String>();
 		DatabaseConnection connection = null;
 		ResultSet result;
@@ -335,11 +276,10 @@ public class BusinessRuleDAO {
 				listValues.add(result.getString(1));
 			}
 			result.close();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally{
+		} finally {
 			try {
 				connection.close();
 			} catch (Exception e) {
