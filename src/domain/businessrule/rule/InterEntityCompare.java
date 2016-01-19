@@ -1,8 +1,5 @@
 package domain.businessrule.rule;
 
-import java.util.ArrayList;
-
-import org.stringtemplate.v4.ST;
 
 import domain.businessrule.BusinessRule;
 import domain.businessrule.BusinessRuleType;
@@ -10,45 +7,43 @@ import domain.businessrule.database.Attribute;
 import domain.businessrule.database.TargetDatabase;
 
 public class InterEntityCompare extends BusinessRule {
-
-	private String code;
-	private String name;
 	private Operator operator;
-	private ArrayList<Attribute> attributes;
+	private Attribute attribute1;
+	private Attribute attribute2;
 
-	public InterEntityCompare(String code, String name,
-			BusinessRuleType businessRuleType, ArrayList<Attribute> attributes) {
+	public InterEntityCompare(String code, String name, BusinessRuleType businessRuleType, Operator operator, Attribute attribute1, Attribute attribute2) {
 		super.setCode(code);
 		super.setName(name);
 		super.setType(businessRuleType);
-		attributes = new ArrayList<Attribute>();
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public ArrayList<Attribute> getAttribute() {
-		return attributes;
-	}
-
-	public void setAttribute(ArrayList<Attribute> attribute) {
-		this.attributes = attribute;
+		this.operator = operator;
+		this.attribute1 = attribute1;
+		this.attribute2 = attribute2;
 	}
 
 
+	public Operator getOperator() {
+		return operator;
+	}
+
+	public void setOperator(Operator operator) {
+		this.operator = operator;
+	}
+
+	public Attribute getAttribute1() {
+		return attribute1;
+	}
+
+	public void setAttribute1(Attribute attribute1) {
+		this.attribute1 = attribute1;
+	}
+
+	public Attribute getAttribute2() {
+		return attribute2;
+	}
+
+	public void setAttribute2(Attribute attribute2) {
+		this.attribute2 = attribute2;
+	}
 
 	@Override
 	public TargetDatabase getTargetDatabase() {

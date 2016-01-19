@@ -10,9 +10,6 @@ import domain.businessrule.database.Attribute;
 import domain.businessrule.database.TargetDatabase;
 
 public class TupleOther extends BusinessRule {
-
-	private String code;
-	private String name;
 	private Attribute attribute1;
 	private Attribute attribute2;
 	private String plsql;
@@ -27,21 +24,6 @@ public class TupleOther extends BusinessRule {
 		this.plsql = plsql;
 	}
 
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public Attribute getAttribute1() {
 		return attribute1;
