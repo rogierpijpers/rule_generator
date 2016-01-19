@@ -11,16 +11,14 @@ import domain.businessrule.database.TargetDatabase;
 
 public class TupleOther extends BusinessRule {
 	private Attribute attribute1;
-	private Attribute attribute2;
 	private String plsql;
 
 	public TupleOther(String code, String name,
-			BusinessRuleType businessRuleType, Attribute attribute1, Attribute attribute2, String plsql) {
+			BusinessRuleType businessRuleType, Attribute attribute1, String plsql) {
 		super.setCode(code);
 		super.setName(name);
 		super.setType(businessRuleType);
 		this.attribute1 = attribute1;
-		this.attribute2 = attribute2;
 		this.plsql = plsql;
 	}
 
@@ -33,13 +31,6 @@ public class TupleOther extends BusinessRule {
 		this.attribute1 = attribute1;
 	}
 
-	public Attribute getAttribute2() {
-		return attribute2;
-	}
-
-	public void setAttribute2(Attribute attribute2) {
-		this.attribute2 = attribute2;
-	}
 
 	public String getPlsql() {
 		return plsql;

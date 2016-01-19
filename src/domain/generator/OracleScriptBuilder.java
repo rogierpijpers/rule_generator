@@ -115,10 +115,7 @@ public class OracleScriptBuilder implements ScriptBuilder {
 	private ST fillTOTH(ST template, BusinessRule businessRule){
 		TupleOther TOTHrule = (TupleOther) businessRule;
 		Column TOTHcolumn1 = (Column) TOTHrule.getAttribute1();
-		Column TOTHcolumn2 = (Column) TOTHrule.getAttribute2();
 		template.add("targetTable", TOTHcolumn1.getTable().getName());
-		template.add("targetColumn1", TOTHcolumn1.getName());
-		template.add("targetColumn2", TOTHcolumn2.getName());
 		template.add("plsql", TOTHrule.getPlsql());
 		template.add("failureMessage", TOTHrule.getFailureMessage());
 		return template;
