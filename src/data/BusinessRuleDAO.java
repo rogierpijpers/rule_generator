@@ -1,6 +1,7 @@
 package data;
 
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import util.RuleHolder;
@@ -88,55 +89,93 @@ public class BusinessRuleDAO {
 		}
 		return codesAndNames;
 	}
-
+	/*
+	 * Wordt aan gewerkt en verbeterd, geen paniek rogier ;)
+	 */
 	public static BusinessRule getDetails(String ruleCode){
-		BusinessRule rule = null;
 
-		String businessruletypecode = getString("SELECT BT.code FROM BUSINESSRULE B, BUSINESSRULETYPE BT WHERE B.code = '"
-				+ ruleCode + "' AND B.businessruletypeid = BT.id");
-
-		String name = getString("SELECT name FROM BUSINESSRULE WHERE code = '"
-				+ ruleCode + "'");
-		String code = getString("SELECT code FROM BUSINESSRULE WHERE code = '"
-				+ ruleCode + "'");
-		String failureMessage = getString("SELECT failuremessage FROM BUSINESSRULE WHERE code = '"
-				+ ruleCode + "'");
-		double minValue = getDouble("SELECT minvalue FROM BUSINESSRULE WHERE code = '"
-				+ ruleCode + "'");
-		double maxValue = getDouble("SELECT maxvalue FROM BUSINESSRULE WHERE code = '"
-				+ ruleCode + "'");
-		double value = getDouble("SELECT value FROM BUSINESSRULE WHERE code = '"
-				+ ruleCode + "'");
-		String plSql = getString("SELECT plsql FROM BUSINESSRULE WHERE code = '"
-				+ ruleCode + "'");
 		Operator operator;
-		String operatorName = getString("SELECT O.name FROM BUSINESSRULE B, OPERATOR O WHERE B.operatorid = O.id AND B.code = '"
-				+ ruleCode + "'");
-		String operatorCharacter = getString("SELECT O.character FROM BUSINESSRULE B, OPERATOR O WHERE B.operatorid = O.id AND B.code = '"
-				+ ruleCode + "'");
-		operator = new Operator(operatorName, operatorCharacter);
 		BusinessRuleType businessRuleType;
-		String businessruletypeCode = getString("SELECT BT.code FROM BUSINESSRULE B, BUSINESSRULETYPE BT WHERE B.businessruletypeid = BT.id AND B.code = '"
-				+ ruleCode + "'");
-		String businessruletypeDescription = getString("SELECT BT.description FROM BUSINESSRULE B, BUSINESSRULETYPE BT WHERE B.businessruletypeid = BT.id AND B.code = '"
-				+ ruleCode + "'");
-		String businessruletypeExample = getString("SELECT BT.example FROM BUSINESSRULE B, BUSINESSRULETYPE BT WHERE B.businessruletypeid = BT.id AND B.code = '"
-				+ ruleCode + "'");
-		CodeType businessruletypeCodeType = parseToCodeType(getString("SELECT BT.codetype FROM BUSINESSRULE B, BUSINESSRULETYPE BT WHERE B.businessruletypeid = BT.id AND B.code = '"
-				+ ruleCode + "'"));
 		Category category;
-		String categoryName = getString("SELECT C.name FROM BUSINESSRULE B, BUSINESSRULETYPE BT, CATEGORY C WHERE B.businessruletypeid = BT.id AND BT.categoryid = C.id AND B.code = '"
-				+ ruleCode + "'");
-		category = new Category(categoryName);
-		businessRuleType = new BusinessRuleType(businessruletypeCode,
-				businessruletypeDescription, businessruletypeExample, category,
-				businessruletypeCodeType);
+		BusinessRule rule;
+		
+		DatabaseConnection connection = null;
+				
+		String query = "SELECT * FROM BUSINESSRULE WHERE code = '" + ruleCode + "'";
+		 try{
+			connection = new DatabaseConnection();
+			ResultSet result = connection.query(query);
+			while(result.next()){
+				int id = result.getInt(1);
+				String name = result.getString(2);
+				String code = result.getString(3);
+				String failureMessage = result.getString(4);
+				double minValue = result.getDouble(5);
+				double maxValue = result.getDouble(6);
+				double value = result.getDouble(7);
+				String plSql = result.getString(8);
+				int operatorID = result.getInt(9);
+				int businessRuleTypeID = result.getInt(10);
+				int attributeID1 = result.getInt(11);
+				int attributeID2 = result.getInt(12);
+				
+				
+			}
+			
+			query = "SELECT * FROM BUSINESSRULE B, OPERATOR O WHERE B.operatorid = O.id AND B.code = '"+ ruleCode + "'";
+			result = connection.query(query);
+			while(result.next()){
+				String operatorName = result.getString(2);
+				String operatorCharacter = result.getString(3);
+				operator = new Operator(operatorName, operatorCharacter);
+				//ergens aan toevoegen
+			}
+			query = "SELECT * FROM BUSINESSRULE B, BUSINESSRULETYPE BT WHERE B.businessruletypeid = BT.id AND B.code = '"
+					+ ruleCode + "'";
+			result = connection.query(query);
+			while(result.next()){
+				String businessRuleTypeCode = result.getString(2);
+				String businessRuleTypeDescription = result.getString(3);
+				String businessRuleTypeExample = result.getString(4);
+				CodeType businessRuleTypeCodeType = parseToCodeType(result.getString(5));
+				businessRuleType = new BusinessRuleType(businessRuleTypeCode,
+						businessRuleTypeDescription, businessRuleTypeExample, category,
+						businessRuleTypeCodeType);
+				//ergens aan toevoegen
+			}
+			query = "SELECT C.name FROM BUSINESSRULE B, BUSINESSRULETYPE BT, CATEGORY C WHERE B.businessruletypeid = BT.id AND BT.categoryid = C.id AND B.code = '"
+					+ ruleCode + "'";
+			result = connection.query(query);
+			while(result.next()){
+				String categoryName = result.getString(2);
+				category = new Category(categoryName);
+				//ergens toevoegen
+			}
+			query = "SELECT A.name FROM BUSINESSRULE B, ATTRIBUTE A WHERE B.attributeid1 = A.id AND B.code = '"
+					+ ruleCode + "'";
+			result = connection.query(query);
+			while (result.next()){
+				String attribute1Name = result.getString(2);
+			}
+			
+		 }
+		 catch(Exception e){
+			 e.printStackTrace();
+		 }
+		 finally{
+			 connection.close();
+		 }
+		
+		
+		
 		Attribute attribute1;
 		String attribute1Name = getString("SELECT A.name FROM BUSINESSRULE B, ATTRIBUTE A WHERE B.attributeid1 = A.id AND B.code = '"
 				+ ruleCode + "'");
+		
 		Table attribute1Table;
 		String attribute1TableName = getString("SELECT T.name FROM BUSINESSRULE B, ATTRIBUTE A, TARGETTABLE T WHERE B.attributeid1 = A.id AND A.tableid = T.id AND B.code = '"
 				+ ruleCode + "'");
+		
 		TargetDatabase attribute1TargetDatabase;
 		String attribute1TargetDatabaseType = getString("SELECT T.databasetype FROM BUSINESSRULE B, ATTRIBUTE A, TARGETTABLE T WHERE B.attributeid1 = A.id AND A.tableid = T.id AND B.code = '"
 				+ ruleCode + "'");
@@ -144,16 +183,20 @@ public class BusinessRuleDAO {
 		attribute1Table = new Table(attribute1TableName,
 				attribute1TargetDatabase);
 		attribute1 = new Column(attribute1Name, attribute1Table);
+		
 		Attribute attribute2;
 		String attribute2Name = getString("SELECT A.name FROM BUSINESSRULE B, ATTRIBUTE A WHERE B.attributeid2 = A.id AND B.code = '"
 				+ ruleCode + "'");
+		
 		Table attribute2Table;
 		String attribute2TableName = getString("SELECT T.name FROM BUSINESSRULE B, ATTRIBUTE A, TARGETTABLE T WHERE B.attributeid2 = A.id AND A.tableid = T.id AND B.code = '"
 				+ ruleCode + "'");
+		
 		TargetDatabase attribute2TargetDatabase;
 		String attribute2TargetDatabaseType = getString("SELECT T.databasetype FROM BUSINESSRULE B, ATTRIBUTE A, TARGETTABLE T WHERE B.attributeid2 = A.id AND A.tableid = T.id AND B.code = '"
 				+ ruleCode + "'");
 		attribute2TargetDatabase = parseToTargetDatabase(attribute2TargetDatabaseType);
+		
 		attribute2Table = new Table(attribute2TableName,
 				attribute2TargetDatabase);
 		attribute2 = new Column(attribute2Name, attribute2Table);
@@ -164,7 +207,7 @@ public class BusinessRuleDAO {
 		attributes.add(attribute1);
 		attributes.add(attribute2);
 
-		switch (businessruletypecode) {
+		switch (businessRuleTypeCode) {
 		case "ARNG":
 			rule = new AttributeRange(code, name, minValue, maxValue, operator,
 					businessRuleType, attribute1);
