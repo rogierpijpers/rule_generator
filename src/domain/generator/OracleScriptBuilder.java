@@ -8,6 +8,7 @@ import domain.businessrule.rule.AttributeCompare;
 import domain.businessrule.rule.AttributeList;
 import domain.businessrule.rule.AttributeOther;
 import domain.businessrule.rule.AttributeRange;
+import domain.businessrule.rule.InterEntityCompare;
 import domain.businessrule.rule.TupleCompare;
 import domain.businessrule.rule.TupleOther;
 
@@ -104,7 +105,7 @@ public class OracleScriptBuilder implements ScriptBuilder {
 		TupleCompare TCMPrule = (TupleCompare) businessRule;
 		Column TCMPcolumn1 = (Column) TCMPrule.getAttribute1();
 		Column TCMPcolumn2 = (Column) TCMPrule.getAttribute2();
-		template.add("targetTable", TCMPcolumn1.getTable());
+		template.add("targetTable", TCMPcolumn1.getTable().getName());
 		template.add("column1", TCMPcolumn1.getName());
 		template.add("operator", TCMPrule.getOperator().getCharacter());
 		template.add("column2", TCMPcolumn2.getName());
@@ -114,27 +115,34 @@ public class OracleScriptBuilder implements ScriptBuilder {
 	private ST fillTOTH(ST template, BusinessRule businessRule){
 		TupleOther TOTHrule = (TupleOther) businessRule;
 		Column TOTHcolumn1 = (Column) TOTHrule.getAttribute1();
-		Column TOTHcolumn2 = (Column) TOTHrule.getAttribute2();
-		template.add("targetTable", TOTHcolumn1.getTable());
-		template.add("targetColumn1", TOTHcolumn1.getName());
-		template.add("targetColumn2", TOTHcolumn2.getName());
+		template.add("targetTable", TOTHcolumn1.getTable().getName());
 		template.add("plsql", TOTHrule.getPlsql());
 		template.add("failureMessage", TOTHrule.getFailureMessage());
 		return template;
 	}
 	
 	private ST fillICMP(ST template, BusinessRule businessRule){
-		
-		return null;
+		InterEntityCompare ICMPrule = (InterEntityCompare) businessRule;
+		Column ICMPcolumn1 = (Column) ICMPrule.getAttribute1();
+		Column ICMPcolumn2 = (Column) ICMPrule.getAttribute2();
+		template.add("targetTable", ICMPcolumn1.getTable().getName());
+		template.add("targetColumn", ICMPcolumn1.getName());
+		template.add("column2", ICMPcolumn2.getName());
+		template.add("table2", ICMPcolumn2.getTable().getName());
+		template.add("table2_pk", ICMPrule.getPrimaryKey().getName());
+		template.add("targetTable_fk", ICMPrule.getForeignKey().getName());
+		template.add("operator", ICMPrule.getOperator().getCharacter());
+		template.add("failureMessage", ICMPrule.getFailureMessage());
+		return template;
 	}
 	
 	private ST fillEOTH(ST template, BusinessRule businessRule){
 		
-		return null;
+		return template;
 	}
 	
 	private ST fillMODI(ST template, BusinessRule businessRule){
 		
-		return null;
+		return template;
 	}
 }

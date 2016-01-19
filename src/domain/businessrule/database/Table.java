@@ -26,5 +26,4 @@ public class Table {
 		this.targetDatabase = targetDatabase;
 	}
 	
-	
 }

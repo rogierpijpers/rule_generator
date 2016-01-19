@@ -1,8 +1,5 @@
 package domain.businessrule.rule;
 
-import java.util.ArrayList;
-
-import org.stringtemplate.v4.ST;
 
 import domain.businessrule.BusinessRule;
 import domain.businessrule.BusinessRuleType;
@@ -10,44 +7,66 @@ import domain.businessrule.database.Attribute;
 import domain.businessrule.database.TargetDatabase;
 
 public class InterEntityCompare extends BusinessRule {
-
-	private String code;
-	private String name;
 	private Operator operator;
-	private ArrayList<Attribute> attributes;
+	private Attribute attribute1;
+	private Attribute attribute2;
+	private Attribute primaryKey;
+	private Attribute foreignKey;
 
-	public InterEntityCompare(String code, String name,
-			BusinessRuleType businessRuleType, ArrayList<Attribute> attributes) {
+	public InterEntityCompare(String code, String name, BusinessRuleType businessRuleType, Operator operator, Attribute attribute1, Attribute attribute2, Attribute primaryKey, Attribute foreignKey) {
 		super.setCode(code);
 		super.setName(name);
 		super.setType(businessRuleType);
-		attributes = new ArrayList<Attribute>();
+		this.operator = operator;
+		this.attribute1 = attribute1;
+		this.attribute2 = attribute2;
+		this.primaryKey = primaryKey;
+		this.foreignKey = foreignKey;
 	}
 
-	public String getCode() {
-		return code;
+
+	public Operator getOperator() {
+		return operator;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setOperator(Operator operator) {
+		this.operator = operator;
 	}
 
-	public String getName() {
-		return name;
+	public Attribute getAttribute1() {
+		return attribute1;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setAttribute1(Attribute attribute1) {
+		this.attribute1 = attribute1;
 	}
 
-	public ArrayList<Attribute> getAttribute() {
-		return attributes;
+	public Attribute getAttribute2() {
+		return attribute2;
 	}
 
-	public void setAttribute(ArrayList<Attribute> attribute) {
-		this.attributes = attribute;
+	public void setAttribute2(Attribute attribute2) {
+		this.attribute2 = attribute2;
 	}
 
+	public Attribute getPrimaryKey() {
+		return primaryKey;
+	}
+
+
+	public void setPrimaryKey(Attribute primaryKey) {
+		this.primaryKey = primaryKey;
+	}
+
+
+	public Attribute getForeignKey() {
+		return foreignKey;
+	}
+
+
+	public void setForeignKey(Attribute foreignKey) {
+		this.foreignKey = foreignKey;
+	}
 
 
 	@Override
