@@ -129,8 +129,8 @@ public class OracleScriptBuilder implements ScriptBuilder {
 		template.add("targetColumn", ICMPcolumn1.getName());
 		template.add("column2", ICMPcolumn2.getName());
 		template.add("table2", ICMPcolumn2.getTable().getName());
-		template.add("table2_pk", ICMPcolumn2.getTable().getPrimaryKey());
-		template.add("targetTable_fk", ICMPcolumn1.getTable().getForeignKey());
+		template.add("table2_pk", ICMPrule.getPrimaryKey().getName());
+		template.add("targetTable_fk", ICMPrule.getForeignKey().getName());
 		template.add("operator", ICMPrule.getOperator().getCharacter());
 		template.add("failureMessage", ICMPrule.getFailureMessage());
 		return template;

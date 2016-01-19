@@ -10,14 +10,18 @@ public class InterEntityCompare extends BusinessRule {
 	private Operator operator;
 	private Attribute attribute1;
 	private Attribute attribute2;
+	private Attribute primaryKey;
+	private Attribute foreignKey;
 
-	public InterEntityCompare(String code, String name, BusinessRuleType businessRuleType, Operator operator, Attribute attribute1, Attribute attribute2) {
+	public InterEntityCompare(String code, String name, BusinessRuleType businessRuleType, Operator operator, Attribute attribute1, Attribute attribute2, Attribute primaryKey, Attribute foreignKey) {
 		super.setCode(code);
 		super.setName(name);
 		super.setType(businessRuleType);
 		this.operator = operator;
 		this.attribute1 = attribute1;
 		this.attribute2 = attribute2;
+		this.primaryKey = primaryKey;
+		this.foreignKey = foreignKey;
 	}
 
 
@@ -44,6 +48,26 @@ public class InterEntityCompare extends BusinessRule {
 	public void setAttribute2(Attribute attribute2) {
 		this.attribute2 = attribute2;
 	}
+
+	public Attribute getPrimaryKey() {
+		return primaryKey;
+	}
+
+
+	public void setPrimaryKey(Attribute primaryKey) {
+		this.primaryKey = primaryKey;
+	}
+
+
+	public Attribute getForeignKey() {
+		return foreignKey;
+	}
+
+
+	public void setForeignKey(Attribute foreignKey) {
+		this.foreignKey = foreignKey;
+	}
+
 
 	@Override
 	public TargetDatabase getTargetDatabase() {
