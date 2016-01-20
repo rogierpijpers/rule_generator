@@ -122,6 +122,8 @@ public class BusinessRuleDAO {
 				businessRuleTypeID = result.getInt(10);
 				attributeID1 = result.getInt(11);
 				attributeID2 = result.getInt(12);
+				primaryKey = result.getString(13);
+				foreignKey = result.getString(14);
 			}
 
 			query = "SELECT * FROM OPERATOR WHERE ID = '" + operatorID + "'";
@@ -173,8 +175,6 @@ public class BusinessRuleDAO {
 				attribute1TableName = result.getString(2);
 				attribute1TargetDatabase = parseToTargetDatabase(result.getString(3));
 				attribute1TargetDatabaseType = result.getString(4);
-				primaryKey = result.getString(5);
-				foreignKey = result.getString(6);
 
 			}
 			query = "SELECT * FROM TARGETTABLE WHERE ID = '" + tableID2 + "'";
