@@ -56,18 +56,42 @@ public abstract class BusinessRule {
 	// ---- for retrieving from database
 
 	public static ArrayList<RuleHolder> getAllCodesAndNames() {
-		return RuleDTO.getAllCodesAndNames();
+		ArrayList<RuleDTO> ruleDTO = new ArrayList<>();
+		ArrayList<RuleHolder> ruleHolder = new ArrayList<>();
+		for(RuleDTO r : ruleDTO){
+			ruleHolder.add( new RuleHolder(r.getCode(),r.getName()));
+		}
+		return ruleHolder;
+	}
+
+	public static BusinessRule getDetails(String code) {
+		ArrayList<RuleDTO> ruleDTO = new ArrayList<>();
+		
+		for(RuleDTO r : ruleDTO){
+			if(r.getCode().equals(code)){
+				
+			}
+		}
+		return null;
+	}
+
+	public static ArrayList<RuleHolder> getAllCodesAndNamesFromSet(String setName) {
+		ArrayList<RuleDTO> ruleDTO = new ArrayList<>();
+		ArrayList<RuleHolder> ruleHolder = new ArrayList<>();
+		for(RuleDTO r : ruleDTO){
+			if(r.getName().equals(setName)){
+				ruleHolder.add( new RuleHolder(r.getCode(),r.getName()));
+				break;
+			}
+			
+		}
+		return ruleHolder;
 	}
 	
-	public static ArrayList<RuleHolder> getCodesAndNamesFromSet(String setName){
-		return RuleDTO.getAllCodesAndNamesFromSet(setName);
-	}
+	
 	
 	public static ArrayList<String> getAllSetNames(){
 		return SetDAO.getAllSetNames();
 	}
 
-	public static BusinessRule getDetails(String code) {
-		return RuleDTO.getDetails(code);
-	}
 }
