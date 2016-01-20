@@ -75,7 +75,7 @@ public abstract class BusinessRule {
 		return null;
 	}
 
-	public static ArrayList<RuleHolder> getAllCodesAndNamesFromSet(String setName) {
+	public static ArrayList<RuleHolder> getCodesAndNamesFromSet(String setName) {
 		ArrayList<RuleDTO> ruleDTO = new ArrayList<>();
 		ArrayList<RuleHolder> ruleHolder = new ArrayList<>();
 		for(RuleDTO r : ruleDTO){
