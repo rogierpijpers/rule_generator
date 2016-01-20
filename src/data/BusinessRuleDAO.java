@@ -84,9 +84,7 @@ public class BusinessRuleDAO {
 		return codesAndNames;
 	}
 
-	/*
-	 * Wordt aan gewerkt en verbetert, geen paniek rogier ;)
-	 */
+
 	public static BusinessRule getDetails(String ruleCode) {
 
 		Operator operator = null;
@@ -103,7 +101,7 @@ public class BusinessRuleDAO {
 		String name = null, code = null, failureMessage = null, minValue = null, maxValue = null, value = null,
 				plSql = null, businessRuleTypeCode = null, attribute1Name = null, attribute2Name = null,
 				attribute1TableName = null, attribute2TableName = null, attribute1TargetDatabaseType = null,
-				attribute2TargetDatabaseType = null;
+				attribute2TargetDatabaseType = null, primaryKey = null, foreignKey = null;
 		ArrayList<String> listValues = getListValues(ruleCode);
 		ArrayList<Attribute> attributes = new ArrayList<Attribute>();
 
@@ -175,6 +173,8 @@ public class BusinessRuleDAO {
 				attribute1TableName = result.getString(2);
 				attribute1TargetDatabase = parseToTargetDatabase(result.getString(3));
 				attribute1TargetDatabaseType = result.getString(4);
+				primaryKey = result.getString(5);
+				foreignKey = result.getString(6);
 
 			}
 			query = "SELECT * FROM TARGETTABLE WHERE ID = '" + tableID2 + "'";
@@ -220,10 +220,11 @@ public class BusinessRuleDAO {
 			rule = new TupleCompare(code, name, operator, businessRuleType, attribute1, attribute2);
 			break;
 		case "TOTH":
-			rule = new TupleOther(code, name, businessRuleType, attribute1, attribute2, plSql);
+			rule = new TupleOther(code, name, businessRuleType, attribute1, plSql);
 			break;
 		case "ICMP":
-			rule = new InterEntityCompare(code, name, businessRuleType, attributes);
+
+			rule = new InterEntityCompare(code, name, businessRuleType, operator, attribute1, attribute2, primaryKey,foreignKey);
 			break;
 		case "EOTH":
 			rule = new EntityOther(code, name, businessRuleType, attributes);
