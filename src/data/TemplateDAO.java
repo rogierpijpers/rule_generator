@@ -16,7 +16,7 @@ public class TemplateDAO {
 		try{
 			connection = new DatabaseConnection();
 			ResultSet result = connection.query("Select * from GeneratorTemplate where name = '"+name+"'");
-			if(result.next()){
+			while(result.next()){
 				String nm = result.getString("name");
 				String scr = result.getString("script");
 				String arg = result.getString("arguments");

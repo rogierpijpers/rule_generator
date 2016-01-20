@@ -17,7 +17,13 @@ public class BusinessRuleTypeDAO {
 		ResultSet result = connection.query(query);
 		
 		while (result.next()) {
-			ruleTypeDTOList.add(new RuleTypeDTO(result.getString(2),result.getString(3),result.getString(4),result.getString(5),result.getString(8)));
+			String ruleCode = result.getString(2);
+			String description = result.getString(3);
+			String example = result.getString(4);
+			String codeType = result.getString(5);
+			String categoryName =result.getString(8);
+			ruleTypeDTOList.add(new RuleTypeDTO(ruleCode, description, example, codeType, categoryName));
+			
 		}
 		
 		result.close();
@@ -39,10 +45,15 @@ public class BusinessRuleTypeDAO {
 		DatabaseConnection connection = null;
 		try {
 			connection = new DatabaseConnection();
-			ResultSet result = connection.query("SELECT * FROM BUSINESSRULETYPE WHERE CODE = '"+ code +"'");
+			ResultSet result = connection.query("SELECT * FROM BUSINESSRULETYPE B, CATEGORY C WHERE B.CATEGORYID = C.ID AND WHERE CODE = '"+ code +"'");
 
 			while (result.next()) {
-			ruleTypeDTO = new RuleTypeDTO(result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getString(6));
+				String ruleCode = result.getString(2);
+				String description = result.getString(3);
+				String example = result.getString(4);
+				String codeType = result.getString(5);
+				String categoryName =result.getString(8);
+			ruleTypeDTO = new RuleTypeDTO(ruleCode, description, example, codeType, categoryName);
 			}
 			result.close();
 
