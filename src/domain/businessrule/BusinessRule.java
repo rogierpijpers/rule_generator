@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.stringtemplate.v4.ST;
 
+import util.RuleDTO;
 import util.RuleHolder;
 import data.BusinessRuleDAO;
 import data.SetDAO;
@@ -55,11 +56,11 @@ public abstract class BusinessRule {
 	// ---- for retrieving from database
 
 	public static ArrayList<RuleHolder> getAllCodesAndNames() {
-		return BusinessRuleDAO.getAllCodesAndNames();
+		return RuleDTO.getAllCodesAndNames();
 	}
 	
 	public static ArrayList<RuleHolder> getCodesAndNamesFromSet(String setName){
-		return BusinessRuleDAO.getAllCodesAndNamesFromSet(setName);
+		return RuleDTO.getAllCodesAndNamesFromSet(setName);
 	}
 	
 	public static ArrayList<String> getAllSetNames(){
@@ -67,6 +68,6 @@ public abstract class BusinessRule {
 	}
 
 	public static BusinessRule getDetails(String code) {
-		return BusinessRuleDAO.getDetails(code);
+		return RuleDTO.getDetails(code);
 	}
 }

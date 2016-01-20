@@ -1,5 +1,9 @@
 package util;
 
+import java.util.ArrayList;
+
+import domain.businessrule.BusinessRule;
+
 public class RuleDTO {
 	private String code;
 	private String name;
@@ -226,6 +230,29 @@ public class RuleDTO {
 	public void setForeignKey(String foreignKey) {
 		this.foreignKey = foreignKey;
 	}
+
+	public static ArrayList<RuleHolder> getAllCodesAndNames() {
+		ArrayList<RuleDTO> ruleDTO = new ArrayList<>();
+		ArrayList<RuleHolder> ruleHolder = new ArrayList<>();
+		for(RuleDTO r : ruleDTO){
+			ruleHolder.add( new RuleHolder(r.getCode(),r.getName()));
+		}
+		return ruleHolder;
+	}
+
+	public static BusinessRule getDetails(String code) {
+		ArrayList<RuleDTO> ruleDTO = new ArrayList<>();
+		for(RuleDTO r : ruleDTO){
+			r.getCode()
+		}
+		return null;
+	}
+
+	public static ArrayList<RuleHolder> getAllCodesAndNamesFromSet(String setName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	
 	
 
