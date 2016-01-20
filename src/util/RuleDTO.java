@@ -8,11 +8,13 @@ public class RuleDTO {
 	
 	private String failureMessage;
 	
-	private double minValue;
-	private double maxValue;
-	private double value;
+	private String minValue;
+	private String maxValue;
+	private String value;
 	private String listValue;
 	private String plsql;
+	private String primaryKey;
+	private String foreignKey;
 	
 	private String operatorName;
 	private String operatorChar;
@@ -27,8 +29,34 @@ public class RuleDTO {
 	private String databaseName_2;
 	private String databaseType_2;
 	
-	public RuleDTO() {
-		// TODO Auto-generated constructor stub
+
+
+	public RuleDTO(String code, String name, String ruleTypeCode, String failureMessage, String minValue,
+			String maxValue, String value, String listValue, String plsql, String primaryKey, String foreignKey, String operatorName, String operatorChar,
+			String attributeName_1, String tableName_1, String databaseName_1, String databaseType_1,
+			String attributeName_2, String tableName_2, String databaseName_2, String databaseType_2) {
+		super();
+		this.code = code;
+		this.name = name;
+		this.ruleTypeCode = ruleTypeCode;
+		this.failureMessage = failureMessage;
+		this.minValue = minValue;
+		this.maxValue = maxValue;
+		this.value = value;
+		this.listValue = listValue;
+		this.plsql = plsql;
+		this.primaryKey = primaryKey;
+		this.foreignKey = foreignKey;
+		this.operatorName = operatorName;
+		this.operatorChar = operatorChar;
+		this.attributeName_1 = attributeName_1;
+		this.tableName_1 = tableName_1;
+		this.databaseName_1 = databaseName_1;
+		this.databaseType_1 = databaseType_1;
+		this.attributeName_2 = attributeName_2;
+		this.tableName_2 = tableName_2;
+		this.databaseName_2 = databaseName_2;
+		this.databaseType_2 = databaseType_2;
 	}
 
 	public String getCode() {
@@ -63,27 +91,27 @@ public class RuleDTO {
 		this.failureMessage = failureMessage;
 	}
 
-	public double getMinValue() {
+	public String getMinValue() {
 		return minValue;
 	}
 
-	public void setMinValue(double minValue) {
+	public void setMinValue(String minValue) {
 		this.minValue = minValue;
 	}
 
-	public double getMaxValue() {
+	public String getMaxValue() {
 		return maxValue;
 	}
 
-	public void setMaxValue(double maxValue) {
+	public void setMaxValue(String maxValue) {
 		this.maxValue = maxValue;
 	}
 
-	public double getValue() {
+	public String getValue() {
 		return value;
 	}
 
-	public void setValue(double value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 
@@ -181,6 +209,22 @@ public class RuleDTO {
 
 	public void setDatabaseType_2(String databaseType_2) {
 		this.databaseType_2 = databaseType_2;
+	}
+
+	public String getPrimaryKey() {
+		return primaryKey;
+	}
+
+	public void setPrimaryKey(String primaryKey) {
+		this.primaryKey = primaryKey;
+	}
+
+	public String getForeignKey() {
+		return foreignKey;
+	}
+
+	public void setForeignKey(String foreignKey) {
+		this.foreignKey = foreignKey;
 	}
 	
 	

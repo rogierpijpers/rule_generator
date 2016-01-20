@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import util.RuleDTO;
 import util.RuleHolder;
 import domain.businessrule.BusinessRule;
 import domain.businessrule.BusinessRuleType;
@@ -30,6 +31,52 @@ public class BusinessRuleDAO {
 
 	public BusinessRuleDAO() {
 
+	}
+
+	// public RuleDTO getBusinessRule(String ruleCode) {
+	// RuleDTO ruleDTO = new RuleDTO();
+	// DatabaseConnection connection = null;
+	// String query = "SELECT * FROM BUSINESSRULE WHERE code = '" + ruleCode +
+	// "'";
+	// try {
+	// connection = new DatabaseConnection();
+	// ResultSet result = connection.query(query);
+	// while (result.next()) {
+	// int id = result.getInt(1);
+	// String name = result.getString(2);
+	// String code = result.getString(3);
+	// String failureMessage = result.getString(4);
+	// String minValue = result.getString(5);
+	// String maxValue = result.getString(6);
+	// String value = result.getString(7);
+	// String plSql = result.getString(8);
+	// int operatorID = result.getInt(9);
+	// int businessRuleTypeID = result.getInt(10);
+	// int attributeID1 = result.getInt(11);
+	// int attributeID2 = result.getInt(12);
+	// String primaryKey = result.getString(13);
+	// String foreignKey = result.getString(14);
+	//
+	//
+	// }
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// } finally {
+	// try {
+	// connection.close();
+	// } catch (Exception e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// }
+	//
+	// return ruleDTO;
+	// }
+
+	public ArrayList<RuleDTO> getAllBusinessRules() {
+		ArrayList<RuleDTO> ruleDTOList = new ArrayList<>();
+
+		return ruleDTOList;
 	}
 
 	public static ArrayList<RuleHolder> getAllCodesAndNames() {
@@ -84,8 +131,7 @@ public class BusinessRuleDAO {
 		return codesAndNames;
 	}
 
-
-	public static BusinessRule getDetails(String ruleCode) {
+	public static RuleDTO getBusinessRule(String ruleCode) {
 
 		Operator operator = null;
 		BusinessRuleType businessRuleType = null;
@@ -93,7 +139,7 @@ public class BusinessRuleDAO {
 		BusinessRule rule = null;
 		Attribute attribute1 = null, attribute2 = null;
 		Table attribute1Table = null, attribute2Table = null;
-		TargetDatabase attribute1TargetDatabase = null, attribute2TargetDatabase = null;
+
 		DatabaseConnection connection = null;
 
 		int id, operatorID = 0, businessRuleTypeID = 0, attributeID1 = 0, attributeID2 = 0, categoryID = 0,
@@ -101,7 +147,8 @@ public class BusinessRuleDAO {
 		String name = null, code = null, failureMessage = null, minValue = null, maxValue = null, value = null,
 				plSql = null, businessRuleTypeCode = null, attribute1Name = null, attribute2Name = null,
 				attribute1TableName = null, attribute2TableName = null, attribute1TargetDatabaseType = null,
-				attribute2TargetDatabaseType = null, primaryKey = null, foreignKey = null;
+				attribute2TargetDatabaseType = null, primaryKey = null, foreignKey = null, operatorName = null,
+				operatorCharacter = null, attribute1TargetDatabase = null, attribute2TargetDatabase = null;
 		ArrayList<String> listValues = getListValues(ruleCode);
 		ArrayList<Attribute> attributes = new ArrayList<Attribute>();
 
@@ -129,9 +176,8 @@ public class BusinessRuleDAO {
 			query = "SELECT * FROM OPERATOR WHERE ID = '" + operatorID + "'";
 			result = connection.query(query);
 			while (result.next()) {
-				String operatorName = result.getString(2);
-				String operatorCharacter = result.getString(3);
-				operator = new Operator(operatorName, operatorCharacter);
+				operatorName = result.getString(2);
+				operatorCharacter = result.getString(3);
 
 			}
 			query = "SELECT * FROM BUSINESSRULETYPE WHERE ID = '" + businessRuleTypeID + "'";
@@ -173,7 +219,7 @@ public class BusinessRuleDAO {
 			result = connection.query(query);
 			while (result.next()) {
 				attribute1TableName = result.getString(2);
-				attribute1TargetDatabase = parseToTargetDatabase(result.getString(3));
+				attribute1TargetDatabase = result.getString(3);
 				attribute1TargetDatabaseType = result.getString(4);
 
 			}
@@ -181,14 +227,9 @@ public class BusinessRuleDAO {
 			result = connection.query(query);
 			while (result.next()) {
 				attribute2TableName = result.getString(2);
-				attribute2TargetDatabase = parseToTargetDatabase(result.getString(3));
+				attribute2TargetDatabase = result.getString(3);
 				attribute2TargetDatabaseType = result.getString(4);
 			}
-
-			attribute1 = new Column(attribute1Name, attribute1Table);
-			attribute1Table = new Table(attribute1TableName, attribute1TargetDatabase);
-			attribute2 = new Column(attribute2Name, attribute2Table);
-			attribute2Table = new Table(attribute2TableName, attribute2TargetDatabase);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -200,44 +241,14 @@ public class BusinessRuleDAO {
 			}
 		}
 
-		attributes.add(attribute1);
-		attributes.add(attribute2);
+		RuleDTO ruleDTO = new RuleDTO(code, name, businessRuleTypeCode, failureMessage, minValue, maxValue, value, plSql, primaryKey,
+				foreignKey, operatorName, operatorCharacter, businessRuleTypeCode, attribute1Name, attribute1TableName,
+				attribute1TargetDatabase, attribute1TargetDatabaseType, attribute2Name, attribute2TableName,
+				attribute2TargetDatabase, attribute2TargetDatabaseType);
 
-		switch (businessRuleTypeCode) {
-		case "ARNG":
-			rule = new AttributeRange(code, name, minValue, maxValue, operator, businessRuleType, attribute1);
-			break;
-		case "ACMP":
-			rule = new AttributeCompare(code, name, value, operator, businessRuleType, attribute1);
-			break;
-		case "ALIS":
-			rule = new AttributeList(code, name, attribute1, operator, businessRuleType, listValues);
-			break;
-		case "AOTH":
-			rule = new AttributeOther(code, name, businessRuleType, attribute1, plSql);
-			break;
-		case "TCMP":
-			rule = new TupleCompare(code, name, operator, businessRuleType, attribute1, attribute2);
-			break;
-		case "TOTH":
-			rule = new TupleOther(code, name, businessRuleType, attribute1, plSql);
-			break;
-		case "ICMP":
-
-			rule = new InterEntityCompare(code, name, businessRuleType, operator, attribute1, attribute2, primaryKey,foreignKey);
-			break;
-		case "EOTH":
-			rule = new EntityOther(code, name, businessRuleType, attributes);
-			break;
-		case "MODI":
-			rule = new Modify(code, name, businessRuleType, attributes);
-			break;
-		}
-
-		return rule;
+		return ruleDTO;
 	}
 
-	
 	private static CodeType parseToCodeType(String codeType) {
 		if (codeType == null || codeType.equals("")) {
 			return null;
