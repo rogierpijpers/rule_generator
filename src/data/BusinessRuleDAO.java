@@ -1,7 +1,6 @@
 package data;
 
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,27 +9,7 @@ import java.util.Date;
 
 import util.RuleDTO;
 import util.RuleHolder;
-import util.RuleTypeDTO;
-import domain.businessrule.BusinessRule;
-import domain.businessrule.BusinessRuleType;
-import domain.businessrule.Category;
-import domain.businessrule.CodeType;
-import domain.businessrule.database.Attribute;
-import domain.businessrule.database.Column;
-import domain.businessrule.database.DatabaseType;
-import domain.businessrule.database.OracleTargetDatabase;
-import domain.businessrule.database.Table;
-import domain.businessrule.database.TargetDatabase;
-import domain.businessrule.rule.AttributeCompare;
-import domain.businessrule.rule.AttributeList;
-import domain.businessrule.rule.AttributeOther;
-import domain.businessrule.rule.AttributeRange;
-import domain.businessrule.rule.EntityOther;
-import domain.businessrule.rule.InterEntityCompare;
-import domain.businessrule.rule.Modify;
-import domain.businessrule.rule.Operator;
-import domain.businessrule.rule.TupleCompare;
-import domain.businessrule.rule.TupleOther;
+
 
 public class BusinessRuleDAO {
 
