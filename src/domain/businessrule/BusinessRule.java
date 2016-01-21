@@ -300,7 +300,7 @@ public abstract class BusinessRule {
 		}
 		
 		BusinessRuleType type = new BusinessRuleType(dto.getRuleTypeCode(), "", "", category, codeType);
-		BusinessRule rule = new InterEntityCompare(dto.getCode(), dto.getName(), type, operator, column1, column2, dto.getForeignKey(), dto.getPrimaryKey());
+		BusinessRule rule = new InterEntityCompare(dto.getCode(), dto.getName(), type, operator, column1, column2, dto.getPrimaryKey(), dto.getForeignKey());
 		rule.setFailureMessage(dto.getFailureMessage());
 		
 		return rule;
