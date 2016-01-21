@@ -1,12 +1,10 @@
 package domain.controller;
 
-import java.io.File;
-import java.io.IOException;
+
 
 import domain.businessrule.BusinessRule;
 import domain.businessrule.BusinessRuleService;
 import domain.businessrule.BusinessRuleServiceImpl;
-import domain.businessrule.database.TargetDatabase;
 import domain.generator.GeneratorServiceImpl;
 
 public class GeneratorController {

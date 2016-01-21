@@ -1,6 +1,5 @@
 package domain.businessrule.rule;
 
-import org.stringtemplate.v4.ST;
 
 import domain.businessrule.BusinessRule;
 import domain.businessrule.BusinessRuleType;

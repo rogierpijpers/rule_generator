@@ -16,66 +16,7 @@ public class BusinessRuleDAO {
 	public BusinessRuleDAO() {
 
 	}
-/*
-	public ArrayList<RuleDTO> getAllBusinessRules() {
-		ArrayList<RuleDTO> ruleDTOList = new ArrayList<>();
-		DatabaseConnection connection = null;
 
-		String query = "SELECT * "
-				+ "FROM BUSINESSRULE B, OPERATOR O, BUSINESSRULETYPE R, CATEGORY C, ATTRIBUTE A, TARGETTABLE T, LISTVALUE L"
-				+ " WHERE B.OPERATORID = O.ID AND B.BUSINESSRULETYPEID = R.ID AND R.CATEGORYID = C.ID AND B.ATTRIBUTEID1 = A.ID AND A.TABLEID = T.ID";
-		try {
-			connection = new DatabaseConnection();
-			ResultSet result = connection.query(query);
-			while (result.next()) {
-				// id = result.getInt(1);
-				String code = result.getString(3);
-				String name = result.getString(2);
-				String businessRuleTypeCode = result.getString(19);
-				String failureMessage = result.getString(4);
-				String minValue = result.getString(5);
-				String maxValue = result.getString(6);
-				String value = result.getString(7);
-				String listValue = result.getString(35);
-				String plSql = result.getString(8);
-				String primaryKey = result.getString(13);
-				String foreignKey = result.getString(14);
-				// operatorID = result.getInt(9);
-				String operatorName = result.getString(16);
-				String operatorCharacter = result.getString(17);
-				// businessRuleTypeID = result.getInt(10);
-				// attributeID1 = result.getInt(11);
-				String attribute1Name = result.getString(27);
-				String attribute1TableName = result.getString(31);
-				String attribute1TargetDatabase = result.getString(32);
-				String attribute1TargetDatabaseType = result.getString(33);
-				// attributeID2 = result.getInt(12);
-				String attribute2Name = result.getString(27);
-				String attribute2TableName = result.getString(31);
-				String attribute2TargetDatabase = result.getString(32);
-				String attribute2TargetDatabaseType = result.getString(33);
-
-				ruleDTOList.add(new RuleDTO(code, name, businessRuleTypeCode, failureMessage, minValue, maxValue,
-						value, listValue, plSql, primaryKey, foreignKey, operatorName, operatorCharacter,
-						attribute1Name, attribute1TableName, attribute1TargetDatabase, attribute1TargetDatabaseType,
-						attribute2Name, attribute2TableName, attribute2TargetDatabase, attribute2TargetDatabaseType));
-			}
-
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				connection.close();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		return ruleDTOList;
-	}
-*/
 	public static ArrayList<RuleHolder> getAllCodesAndNames() {
 		ArrayList<RuleHolder> codesAndNames = new ArrayList<RuleHolder>();
 		DatabaseConnection connection = null;
@@ -269,11 +210,13 @@ public class BusinessRuleDAO {
 	private static String parseValue(String value){
 		try{
 			DateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
+			@SuppressWarnings("unused")
 			Date input = fmt.parse(value);
 			
 			value = "to_date ('"+value+"', 'dd-mon-yyyy')";
 		}catch(ParseException e){
 			try{
+				@SuppressWarnings("unused")
 				double valueChek = Double.parseDouble(value);
 			}catch(NumberFormatException e2){
 				value = "'"+value+"'";

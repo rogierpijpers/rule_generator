@@ -2,7 +2,6 @@ package util;
 
 import java.util.ArrayList;
 
-import domain.businessrule.BusinessRule;
 
 public class RuleDTO {
 	private String code;
