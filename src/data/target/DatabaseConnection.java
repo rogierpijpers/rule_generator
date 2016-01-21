@@ -50,7 +50,7 @@ public class DatabaseConnection implements AutoCloseable{
 			statement = connection.createStatement();
 			statement.executeUpdate(sql);
 		}catch(SQLException e){
-			Logger.log(e.getMessage());
+			Logger.log(e.getMessage() + " SQL> "+sql);
 			e.printStackTrace();
 		}
 	}

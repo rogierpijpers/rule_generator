@@ -7,6 +7,7 @@ import org.stringtemplate.v4.ST;
 import domain.businessrule.BusinessRule;
 import domain.businessrule.BusinessRuleType;
 import domain.businessrule.database.Attribute;
+import domain.businessrule.database.Column;
 import domain.businessrule.database.TargetDatabase;
 
 public class TupleCompare extends BusinessRule {
@@ -69,7 +70,8 @@ public class TupleCompare extends BusinessRule {
 
 	@Override
 	public TargetDatabase getTargetDatabase() {
-		return null;
+		Column column = (Column) this.getAttribute1();
+		return column.getTable().getTargetDatabase();
 	}
 
 

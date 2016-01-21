@@ -33,7 +33,7 @@ public class BusinessRuleDAO {
 	public BusinessRuleDAO() {
 
 	}
-
+/*
 	public ArrayList<RuleDTO> getAllBusinessRules() {
 		ArrayList<RuleDTO> ruleDTOList = new ArrayList<>();
 		DatabaseConnection connection = null;
@@ -92,7 +92,7 @@ public class BusinessRuleDAO {
 
 		return ruleDTOList;
 	}
-
+*/
 	public static ArrayList<RuleHolder> getAllCodesAndNames() {
 		ArrayList<RuleHolder> codesAndNames = new ArrayList<RuleHolder>();
 		DatabaseConnection connection = null;
@@ -149,13 +149,13 @@ public class BusinessRuleDAO {
 		RuleDTO ruleDTO = null;
 		DatabaseConnection connection = null;
 
-		String query = "SELECT B.ID AS RULE_ID, B.CODE AS RULE_CODE, B.NAME AS RULE_NAME, R.CODE AS RULETYPE_CODE, C.NAME AS CATEGORY, B.FAILUREMESSAGE AS FAILUREMESSAGE, B.MINVALUE AS MINVALUE, B.MAXVALUE AS MAXVALUE, B.VALUE AS VALUE, B.PLSQL AS PLSQL, B.PRIMARYKEY AS PK, B.FOREIGNKEY AS FK," 
-		+"O.NAME AS OPERATOR_NAME, O.CHARACTER AS OPERATOR_CHAR, B.ATTRIBUTEID1 AS ATTRIBUTE_1, B.ATTRIBUTEID2 AS ATTRIBUTE_2 "
-+"FROM BUSINESSRULE B, BUSINESSRULETYPE R, OPERATOR O, CATEGORY C"
-+"WHERE B.BUSINESSRULETYPEID = R.ID"
-+"AND B.OPERATORID = O.ID"
-+"AND R.CATEGORYID = C.ID"
+		String query = "SELECT B.ID AS RULE_ID, B.CODE AS RULE_CODE, B.NAME AS RULE_NAME, B.OPERATORID AS OPERATOR_ID, R.CODE AS RULETYPE_CODE, R.CODETYPE AS RULE_CODETYPE, C.NAME AS CATEGORY, B.FAILUREMESSAGE AS FAILUREMESSAGE, B.MINVALUE AS MINVALUE, B.MAXVALUE AS MAXVALUE, B.VALUE AS VALUE, B.PLSQL AS PLSQL, B.PRIMARYKEY AS PK, B.FOREIGNKEY AS FK," 
+		+"B.ATTRIBUTEID1 AS ATTRIBUTE_1, B.ATTRIBUTEID2 AS ATTRIBUTE_2 "
++"FROM BUSINESSRULE B, BUSINESSRULETYPE R, CATEGORY C "
++"WHERE B.BUSINESSRULETYPEID = R.ID "
++"AND R.CATEGORYID = C.ID "
 +"AND B.CODE = '"+ruleCode+"'";
+
 		try {
 			connection = new DatabaseConnection();
 			ResultSet result = connection.query(query);
@@ -164,6 +164,7 @@ public class BusinessRuleDAO {
 				String code = result.getString("RULE_CODE");
 				String name = result.getString("RULE_NAME");
 				String businessRuleTypeCode = result.getString("RULETYPE_CODE");
+				String ruleCodeType = result.getString("RULE_CODETYPE");
 				String failureMessage = result.getString("FAILUREMESSAGE");
 				String minValue = result.getString("MINVALUE");
 				String maxValue = result.getString("MAXVALUE");
@@ -171,8 +172,7 @@ public class BusinessRuleDAO {
 				String plSql = result.getString("PLSQL");
 				String primaryKey = result.getString("PK");
 				String foreignKey = result.getString("FK");
-				String operatorName = result.getString("OPERATOR_NAME");
-				String operatorCharacter = result.getString("OPERATOR_CHAR");
+				
 				String categoryName = result.getString("CATEGORY");
 				
 				int attributeID1;
@@ -188,6 +188,24 @@ public class BusinessRuleDAO {
 					attributeID2 = 0;
 				}
 				
+				int operatorID;
+				try{
+					operatorID = result.getInt("OPERATOR_ID");
+				}catch(NullPointerException e){
+					operatorID = 0;
+				}
+				
+				String operatorName = null;
+				String operatorCharacter = null;
+				
+				if(operatorID != 0){
+					String operatorQuery = "SELECT NAME AS OPERATOR_NAME, CHARACTER AS OPERATOR_CHAR FROM OPERATOR WHERE ID = "+operatorID+"";
+					ResultSet operatorSet = connection.query(operatorQuery);
+					while(operatorSet.next()){
+						operatorName = operatorSet.getString("OPERATOR_NAME");
+						operatorCharacter = operatorSet.getString("OPERATOR_CHAR");
+					}
+				}
 				
 				ArrayList<String> listValue = null;
 				if(businessRuleTypeCode.equals("ALIS")){
@@ -209,9 +227,9 @@ public class BusinessRuleDAO {
 				String attribute2TargetDatabaseType = null;
 				
 				if(attributeID1 != 0){
-					String attQuery = "SELECT A.NAME AS ATTRIBUTE_NAME, T.NAME AS TABLE_NAME, T.ORACLETARGETDATABASEID AS DB_NAME, T.DATABASETYPE AS DB_TYPE"
-							+"FROM ATTRIBUTE A, TARGETTABLE T"
-							+"WHERE A.TABLEID = T.ID"
+					String attQuery = "SELECT A.NAME AS ATTRIBUTE_NAME, T.NAME AS TABLE_NAME, T.ORACLETARGETDATABASEID AS DB_NAME, T.DATABASETYPE AS DB_TYPE "
+							+"FROM ATTRIBUTE A, TARGETTABLE T "
+							+"WHERE A.TABLEID = T.ID "
 							+"AND A.ID = "+attributeID1+"";
 					ResultSet attRes = connection.query(attQuery);
 					while(attRes.next()){
@@ -223,9 +241,9 @@ public class BusinessRuleDAO {
 				}
 				
 				if(attributeID2 != 0){
-					String attQuery = "SELECT A.NAME AS ATTRIBUTE_NAME, T.NAME AS TABLE_NAME, T.ORACLETARGETDATABASEID AS DB_NAME, T.DATABASETYPE AS DB_TYPE"
-							+"FROM ATTRIBUTE A, TARGETTABLE T"
-							+"WHERE A.TABLEID = T.ID"
+					String attQuery = "SELECT A.NAME AS ATTRIBUTE_NAME, T.NAME AS TABLE_NAME, T.ORACLETARGETDATABASEID AS DB_NAME, T.DATABASETYPE AS DB_TYPE "
+							+"FROM ATTRIBUTE A, TARGETTABLE T "
+							+"WHERE A.TABLEID = T.ID "
 							+"AND A.ID = "+attributeID2+"";
 					ResultSet attRes = connection.query(attQuery);
 					while(attRes.next()){
@@ -237,10 +255,10 @@ public class BusinessRuleDAO {
 				}
 				
 
-				ruleDTO = new RuleDTO(code, name, businessRuleTypeCode, failureMessage, minValue, maxValue,
+				ruleDTO = new RuleDTO(code, name, businessRuleTypeCode, ruleCodeType, failureMessage, minValue, maxValue,
 						value, listValue, plSql, primaryKey, foreignKey, operatorName, operatorCharacter,
 						attribute1Name, attribute1TableName, attribute1TargetDatabase, attribute1TargetDatabaseType,
-						attribute2Name, attribute2TableName, attribute2TargetDatabase, attribute2TargetDatabaseType);
+						attribute2Name, attribute2TableName, attribute2TargetDatabase, attribute2TargetDatabaseType, categoryName);
 			}		
 		} catch (Exception e) {
 			e.printStackTrace();

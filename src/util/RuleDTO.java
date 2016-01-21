@@ -9,13 +9,14 @@ public class RuleDTO {
 	private String name;
 	
 	private String ruleTypeCode;
+	private String codeType;
 	
 	private String failureMessage;
 	
 	private String minValue;
 	private String maxValue;
 	private String value;
-	private String listValue;
+	private ArrayList<String> listValue;
 	private String plsql;
 	private String primaryKey;
 	private String foreignKey;
@@ -33,16 +34,18 @@ public class RuleDTO {
 	private String databaseName_2;
 	private String databaseType_2;
 	
+	private String categoryName;
 
 
-	public RuleDTO(String code, String name, String ruleTypeCode, String failureMessage, String minValue,
-			String maxValue, String value, String listValue, String plsql, String primaryKey, String foreignKey, String operatorName, String operatorChar,
+	public RuleDTO(String code, String name, String ruleTypeCode, String codeType, String failureMessage, String minValue,
+			String maxValue, String value, ArrayList<String> listValue, String plsql, String primaryKey, String foreignKey, String operatorName, String operatorChar,
 			String attributeName_1, String tableName_1, String databaseName_1, String databaseType_1,
-			String attributeName_2, String tableName_2, String databaseName_2, String databaseType_2) {
+			String attributeName_2, String tableName_2, String databaseName_2, String databaseType_2, String categoryName) {
 		super();
 		this.code = code;
 		this.name = name;
 		this.ruleTypeCode = ruleTypeCode;
+		this.codeType = codeType;
 		this.failureMessage = failureMessage;
 		this.minValue = minValue;
 		this.maxValue = maxValue;
@@ -61,6 +64,7 @@ public class RuleDTO {
 		this.tableName_2 = tableName_2;
 		this.databaseName_2 = databaseName_2;
 		this.databaseType_2 = databaseType_2;
+		this.categoryName = categoryName;
 	}
 
 	public String getCode() {
@@ -85,6 +89,14 @@ public class RuleDTO {
 
 	public void setRuleTypeCode(String ruleTypeCode) {
 		this.ruleTypeCode = ruleTypeCode;
+	}
+
+	public String getCodeType() {
+		return codeType;
+	}
+
+	public void setCodeType(String codeType) {
+		this.codeType = codeType;
 	}
 
 	public String getFailureMessage() {
@@ -119,11 +131,11 @@ public class RuleDTO {
 		this.value = value;
 	}
 
-	public String getListValue() {
+	public ArrayList<String> getListValue() {
 		return listValue;
 	}
 
-	public void setListValue(String listValue) {
+	public void setListValue(ArrayList<String> listValue) {
 		this.listValue = listValue;
 	}
 
@@ -229,6 +241,14 @@ public class RuleDTO {
 
 	public void setForeignKey(String foreignKey) {
 		this.foreignKey = foreignKey;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 	

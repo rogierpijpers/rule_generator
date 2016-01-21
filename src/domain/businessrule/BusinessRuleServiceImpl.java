@@ -18,7 +18,7 @@ public class BusinessRuleServiceImpl implements BusinessRuleService {
 
 	@Override
 	public ArrayList<RuleHolder> getCodesAndNamesFromSet(String setName) {
-		return BusinessRule.getAllCodesAndNamesFromSet(setName);
+		return BusinessRule.getCodesAndNamesFromSet(setName);
 	}
 
 	@Override
