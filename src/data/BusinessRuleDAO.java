@@ -2,7 +2,11 @@ package data;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import util.RuleDTO;
 import util.RuleHolder;
@@ -173,6 +177,13 @@ public class BusinessRuleDAO {
 				String primaryKey = result.getString("PK");
 				String foreignKey = result.getString("FK");
 				
+				if(minValue != null){
+					minValue = parseValue(minValue);
+				}
+				if(maxValue != null){
+					maxValue = parseValue(maxValue);
+				}
+				
 				String categoryName = result.getString("CATEGORY");
 				
 				int attributeID1;
@@ -271,6 +282,23 @@ public class BusinessRuleDAO {
 			}
 		}
 		return ruleDTO;
+	}
+	
+	private static String parseValue(String value){
+		try{
+			DateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
+			Date input = fmt.parse(value);
+			
+			value = "to_date ('"+value+"', 'dd-mon-yyyy')";
+		}catch(ParseException e){
+			try{
+				double valueChek = Double.parseDouble(value);
+			}catch(NumberFormatException e2){
+				value = "'"+value+"'";
+			}
+			
+		}
+		return value;
 	}
 	
 
