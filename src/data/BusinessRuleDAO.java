@@ -183,6 +183,9 @@ public class BusinessRuleDAO {
 				if(maxValue != null){
 					maxValue = parseValue(maxValue);
 				}
+				if(value != null){
+					value = parseValue(value);
+				}
 				
 				String categoryName = result.getString("CATEGORY");
 				
