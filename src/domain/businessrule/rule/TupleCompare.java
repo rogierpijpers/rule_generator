@@ -9,9 +9,6 @@ import domain.businessrule.database.Column;
 import domain.businessrule.database.TargetDatabase;
 
 public class TupleCompare extends BusinessRule {
-
-	private String code;
-	private String name;
 	private Operator operator;
 	private Attribute attribute1;
 	private Attribute attribute2;
@@ -24,22 +21,6 @@ public class TupleCompare extends BusinessRule {
 		super.setType(businessRuleType);
 		this.setAttribute1(attribute1);
 		this.setAttribute2(attribute2);
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public Operator getOperator() {
