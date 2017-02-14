@@ -10,9 +10,8 @@ import data.SetDAO;
 import domain.businessrule.database.Attribute;
 import domain.businessrule.database.Column;
 import domain.businessrule.database.DatabaseType;
-import domain.businessrule.database.OracleTargetDatabase;
-import domain.businessrule.database.Table;
 import domain.businessrule.database.TargetDatabase;
+import domain.businessrule.database.Table;
 import domain.businessrule.rule.AttributeCompare;
 import domain.businessrule.rule.AttributeList;
 import domain.businessrule.rule.AttributeOther;
@@ -108,7 +107,7 @@ public abstract class BusinessRule {
 	}
 	
 	private static BusinessRule getARNGrule(RuleDTO dto){
-		TargetDatabase targetDatabase = new OracleTargetDatabase();
+		TargetDatabase targetDatabase = new TargetDatabase();
 		targetDatabase.setName(dto.getDatabaseName_1());
 		targetDatabase.setType(DatabaseType.ORACLE);
 		
@@ -134,7 +133,7 @@ public abstract class BusinessRule {
 	}
 	
 	private static BusinessRule getACMPrule(RuleDTO dto){
-		TargetDatabase targetDatabase = new OracleTargetDatabase();
+		TargetDatabase targetDatabase = new TargetDatabase();
 		targetDatabase.setName(dto.getDatabaseName_1());
 		targetDatabase.setType(DatabaseType.ORACLE);
 		
@@ -160,7 +159,7 @@ public abstract class BusinessRule {
 	}
 	
 	private static BusinessRule getALISrule(RuleDTO dto){
-		TargetDatabase targetDatabase = new OracleTargetDatabase();
+		TargetDatabase targetDatabase = new TargetDatabase();
 		targetDatabase.setName(dto.getDatabaseName_1());
 		targetDatabase.setType(DatabaseType.ORACLE);
 		
@@ -188,7 +187,7 @@ public abstract class BusinessRule {
 	}
 	
 	private static BusinessRule getAOTHrule(RuleDTO dto){
-		TargetDatabase targetDatabase = new OracleTargetDatabase();
+		TargetDatabase targetDatabase = new TargetDatabase();
 		targetDatabase.setName(dto.getDatabaseName_1());
 		targetDatabase.setType(DatabaseType.ORACLE);
 		
@@ -214,7 +213,7 @@ public abstract class BusinessRule {
 	}
 	
 	private static BusinessRule getTCMPrule(RuleDTO dto){
-		TargetDatabase targetDatabase1 = new OracleTargetDatabase();
+		TargetDatabase targetDatabase1 = new TargetDatabase();
 		targetDatabase1.setName(dto.getDatabaseName_1());
 		targetDatabase1.setType(DatabaseType.ORACLE);
 		
@@ -222,7 +221,7 @@ public abstract class BusinessRule {
 		
 		Attribute column1 = new Column(dto.getAttributeName_1(), table1);
 		
-		TargetDatabase targetDatabase2 = new OracleTargetDatabase();
+		TargetDatabase targetDatabase2 = new TargetDatabase();
 		targetDatabase2.setName(dto.getDatabaseName_2());
 		targetDatabase2.setType(DatabaseType.ORACLE);
 		
@@ -247,7 +246,7 @@ public abstract class BusinessRule {
 	}
 	
 	private static BusinessRule getTOTHrule(RuleDTO dto){
-		TargetDatabase targetDatabase = new OracleTargetDatabase();
+		TargetDatabase targetDatabase = new TargetDatabase();
 		targetDatabase.setName(dto.getDatabaseName_1());
 		targetDatabase.setType(DatabaseType.ORACLE);
 		
@@ -273,7 +272,7 @@ public abstract class BusinessRule {
 	}
 	
 	private static BusinessRule getICMPrule(RuleDTO dto){
-		TargetDatabase targetDatabase1 = new OracleTargetDatabase();
+		TargetDatabase targetDatabase1 = new TargetDatabase();
 		targetDatabase1.setName(dto.getDatabaseName_1());
 		targetDatabase1.setType(DatabaseType.ORACLE);
 		
@@ -281,7 +280,7 @@ public abstract class BusinessRule {
 		
 		Attribute column1 = new Column(dto.getAttributeName_1(), table1);
 		
-		TargetDatabase targetDatabase2 = new OracleTargetDatabase();
+		TargetDatabase targetDatabase2 = new TargetDatabase();
 		targetDatabase2.setName(dto.getDatabaseName_2());
 		targetDatabase2.setType(DatabaseType.ORACLE);
 		
