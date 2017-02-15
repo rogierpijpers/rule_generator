@@ -18,7 +18,9 @@ public class UIController {
 	
 	public void generateBusinessRules(ObservableList<String> ruleCodes, String saveDirectory, boolean execute){
 		for(String ruleCode : ruleCodes){
-			generator.generateSaveAndExecuteBusinessRule(ruleCode, saveDirectory, execute);
+			generator.setScriptDirectory(saveDirectory);
+			generator.setExecuteScript(execute);
+			generator.generateSaveAndExecuteBusinessRule(ruleCode);
 		}
 	}
 	

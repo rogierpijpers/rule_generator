@@ -9,14 +9,32 @@ import domain.generator.GeneratorServiceImpl;
 import domain.generator.GeneratorService;
 
 public class GeneratorController extends GeneratorControllerTemplate{
+	private String scriptDirectory;
+	private boolean executeScript;
+
+	public String getScriptDirectory(){
+		return scriptDirectory;
+	}
+
+	public void setScriptDirectory(String scriptDirectory){
+		this.scriptDirectory = scriptDirectory;
+	}
+
+	public boolean getExecuteScript(){
+		return executeScript;
+	}
+
+	public void setExecuteScript(boolean executeScript){
+		this.executeScript = executeScript;
+	}
 
 	public GeneratorController() {
 	}
 	
-	public String generateSaveAndExecuteBusinessRule(String ruleCode, String directory, boolean execute){
+	public String generateSaveAndExecuteBusinessRule(String ruleCode){
 		BusinessRule businessRule = getRuleAndCreateService(ruleCode);
-		String script = createScript(businessRule, directory, "sql");
-		if(execute){
+		String script = createScript(businessRule, scriptDirectory, "sql");
+		if(executeScript){
 			service.executeScript(script);
 		}
 		return script;
