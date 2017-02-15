@@ -37,115 +37,131 @@ import javafx.stage.Stage;
 public class GeneratorUI extends Application{
 	private UIController controller;
 	private String saveDirectory;
-	
-	@Override
-	public void start(Stage primaryStage) throws Exception {
+
+	private void initializeControllers(){
 		controller = new UIController();
 		saveDirectory = getApplicationPath();
+	}
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		initializeControllers();
 		
 		BorderPane root = new BorderPane();
-		
 		Label setLabel = new Label("current set:");
-		ComboBox<String> set = new ComboBox<>();
-		set.setMinWidth(80);
-		try{
-			set.getItems().addAll(controller.getAllSets());
-		}catch(NullPointerException e){};
-		
-		ListView<String> list = new ListView<String>();
-		if(set.getValue() != null){	
-			list.setItems(getListViewItems(set.getValue()));
-		}
-		list.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		
+		ComboBox<String> set = getSetComboBox();
+		ListView<String> list = getStringListView(set);
+		setSetChangeListeners(set, list);
+		CheckBox execute = new CheckBox("execute scripts");
+		Button generateSelected = getGenerateSelectedButton(primaryStage, list, execute);
+		Button generateAll = getGenerateAllButton(primaryStage, set, execute);
+		VBox rootBox = new VBox();
+
+		HBox top = getNewHBox(10);
+		VBox center = getNewVBox();
+		HBox bottom = getNewHBox(20);
+		bottom.setAlignment(Pos.TOP_RIGHT);
+
+		VBox topContainer = new VBox();
+		createMenu(primaryStage, set, list, topContainer);
+		addObjectsToView(root, setLabel, set, list, execute, generateSelected, generateAll, rootBox, top, center, bottom, topContainer);
+		createSceneAndShow(primaryStage, root);
+	}
+
+	private VBox getNewVBox() {
+		VBox center = new VBox();
+		center.setSpacing(10);
+		return center;
+	}
+
+	private HBox getNewHBox(int value) {
+		HBox top = new HBox();
+		top.setSpacing(value);
+		return top;
+	}
+
+	private void addObjectsToView(BorderPane root, Label setLabel, ComboBox<String> set, ListView<String> list, CheckBox execute, Button generateSelected, Button generateAll, VBox rootBox, HBox top, VBox center, HBox bottom, VBox topContainer) {
+		top.getChildren().addAll(setLabel, set);
+		center.getChildren().addAll(list, execute);
+		bottom.getChildren().addAll(generateSelected, generateAll);
+
+		rootBox.getChildren().addAll(top, center, bottom);
+		rootBox.setPadding(new Insets(50, 50, 50, 50));
+		rootBox.setSpacing(10);
+
+		root.setTop(topContainer);
+		root.setCenter(rootBox);
+	}
+
+	private void createSceneAndShow(Stage primaryStage, BorderPane root) {
+		Scene scene = new Scene(root, 800, 500);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		primaryStage.setTitle("Businessrule Generator");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+
+	private void setSetChangeListeners(final ComboBox<String> set, final ListView<String> list) {
 		set.valueProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable,
 					String oldValue, String newValue) {
 				list.setItems(getListViewItems(set.getValue()));
-			}    
+			}
 	    });
-		
-		CheckBox execute = new CheckBox("execute scripts");
-		
-		Button generateSelected = new Button("Generate selected");
-		generateSelected.setOnAction(new EventHandler<ActionEvent>(){
-			public void handle(ActionEvent event) {
-				generateRules(primaryStage, list.getSelectionModel().getSelectedItems(), saveDirectory, execute.isSelected());
-			}
-		});
-		Button generateAll = new Button("Generate all");
-		generateAll.setOnAction(new EventHandler<ActionEvent>(){
-			public void handle(ActionEvent event) {
-				if(set.getValue() != null){
-					ObservableList<String> rules = getListViewItems(set.getValue());
-					generateRules(primaryStage, rules, saveDirectory, execute.isSelected());
-				}
-			}
-		});
-		
-		
-		VBox rootBox = new VBox();
-		
-		HBox top = new HBox();
-		top.setSpacing(10);
-		
-		VBox center = new VBox();
-		center.setSpacing(10);
-		
-		HBox bottom = new HBox();
-		bottom.setSpacing(20);
-		bottom.setAlignment(Pos.TOP_RIGHT);
-		
-		// menu
-		
-		VBox topContainer = new VBox(); 
-		MenuBar mainMenu = new MenuBar();  
-		
+	}
+
+	private ListView<String> getStringListView(ComboBox<String> set) {
+		ListView<String> list = new ListView<String>();
+		if(set.getValue() != null){
+			list.setItems(getListViewItems(set.getValue()));
+		}
+		list.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		return list;
+	}
+
+	private ComboBox<String> getSetComboBox() {
+		ComboBox<String> set = new ComboBox<>();
+		set.setMinWidth(80);
+		try{
+			set.getItems().addAll(controller.getAllSets());
+		}catch(NullPointerException e){}
+		;
+		return set;
+	}
+
+	private void createMenu(final Stage primaryStage, final ComboBox<String> set, final ListView<String> list, VBox topContainer) {
+		MenuBar mainMenu = new MenuBar();
+
 		topContainer.getChildren().add(mainMenu);
-		
+
 		Menu file = new Menu("File");
 		Menu settings = new Menu("Settings");
-		
-		MenuItem refresh = new MenuItem("Refresh");
-		refresh.setOnAction(new EventHandler<ActionEvent>(){
-			public void handle(ActionEvent event) {
-				try{
-					set.getItems().clear();
-					set.getItems().addAll(controller.getAllSets());
-				}catch(NullPointerException e){};
-				list.setItems(getListViewItems(set.getValue()));
-			}
-			
-		});
-		MenuItem errorLog = new MenuItem("Open errorlog");
-		errorLog.setOnAction(new EventHandler<ActionEvent>(){
-			public void handle(ActionEvent event){
-				File f = new File("errorLog.txt");
-				if(f.exists() && !f.isDirectory()) { 
-					if (Desktop.isDesktopSupported()) {
-					    	try {
-								Desktop.getDesktop().edit(f);
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-					}
-				}else{
-					MessageDialog emptyDialog = new MessageDialog(primaryStage, "Errorlog doesn't exist yet...");
-					emptyDialog.show();
-				}
-			}
-		});
+
+		MenuItem refresh = getRefreshMenuItem(set, list);
+		MenuItem errorLog = getErrorLogMenuItem(primaryStage);
+		MenuItem exitApp = getExitAppMenuItem();
+		file.getItems().addAll(refresh, errorLog, exitApp);
+
+		MenuItem targetSettings = new MenuItem("Target database");
+		targetSettings.setDisable(true);
+		MenuItem scriptDir = getScriptDirMenuItem(primaryStage);
+		settings.getItems().addAll(targetSettings, scriptDir);
+
+		mainMenu.getMenus().addAll(file, settings);
+	}
+
+	private MenuItem getExitAppMenuItem() {
 		MenuItem exitApp = new MenuItem("Exit");
 		exitApp.setOnAction(new EventHandler<ActionEvent>(){
 			public void handle(ActionEvent event) {
 				Platform.exit();
 			}
 		});
-		file.getItems().addAll(refresh, errorLog, exitApp);
-		
-		MenuItem targetSettings = new MenuItem("Target database");
-		targetSettings.setDisable(true);
+		return exitApp;
+	}
+
+	private MenuItem getScriptDirMenuItem(final Stage primaryStage) {
 		MenuItem scriptDir = new MenuItem("Script directory");
 		scriptDir.setOnAction(new EventHandler<ActionEvent>() {
 		    public void handle(ActionEvent t) {
@@ -164,33 +180,69 @@ public class GeneratorUI extends Application{
 				}
 		    }
 		});
-		settings.getItems().addAll(targetSettings, scriptDir);
-		
-		mainMenu.getMenus().addAll(file, settings);
-		
-		// adding objects
-		
-		top.getChildren().addAll(setLabel, set);
-		center.getChildren().addAll(list, execute);
-		bottom.getChildren().addAll(generateSelected, generateAll);
-		
-		rootBox.getChildren().addAll(top, center, bottom);
-		rootBox.setPadding(new Insets(50, 50, 50, 50));
-		rootBox.setSpacing(10);
-		
-		root.setTop(topContainer);
-		root.setCenter(rootBox);
-		
-		
-		// creating scene
-		
-		Scene scene = new Scene(root, 800, 500);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		primaryStage.setTitle("Businessrule Generator");
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		return scriptDir;
 	}
-	
+
+	private MenuItem getErrorLogMenuItem(final Stage primaryStage) {
+		MenuItem errorLog = new MenuItem("Open errorlog");
+		errorLog.setOnAction(new EventHandler<ActionEvent>(){
+			public void handle(ActionEvent event){
+				File f = new File("errorLog.txt");
+				if(f.exists() && !f.isDirectory()) {
+					if (Desktop.isDesktopSupported()) {
+					    	try {
+								Desktop.getDesktop().edit(f);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+					}
+				}else{
+					MessageDialog emptyDialog = new MessageDialog(primaryStage, "Errorlog doesn't exist yet...");
+					emptyDialog.show();
+				}
+			}
+		});
+		return errorLog;
+	}
+
+	private MenuItem getRefreshMenuItem(final ComboBox<String> set, final ListView<String> list) {
+		MenuItem refresh = new MenuItem("Refresh");
+		refresh.setOnAction(new EventHandler<ActionEvent>(){
+			public void handle(ActionEvent event) {
+				try{
+					set.getItems().clear();
+					set.getItems().addAll(controller.getAllSets());
+				}catch(NullPointerException e){};
+				list.setItems(getListViewItems(set.getValue()));
+			}
+
+		});
+		return refresh;
+	}
+
+	private Button getGenerateSelectedButton(final Stage primaryStage, final ListView<String> list, final CheckBox execute) {
+		Button generateSelected = new Button("Generate selected");
+		generateSelected.setOnAction(new EventHandler<ActionEvent>(){
+			public void handle(ActionEvent event) {
+				generateRules(primaryStage, list.getSelectionModel().getSelectedItems(), saveDirectory, execute.isSelected());
+			}
+		});
+		return generateSelected;
+	}
+
+	private Button getGenerateAllButton(final Stage primaryStage, final ComboBox<String> set, final CheckBox execute) {
+		Button generateAll = new Button("Generate all");
+		generateAll.setOnAction(new EventHandler<ActionEvent>(){
+			public void handle(ActionEvent event) {
+				if(set.getValue() != null){
+					ObservableList<String> rules = getListViewItems(set.getValue());
+					generateRules(primaryStage, rules, saveDirectory, execute.isSelected());
+				}
+			}
+		});
+		return generateAll;
+	}
+
 	private ObservableList<String> getListViewItems(String setValue){
 		ObservableList <String> ruleCodes = FXCollections.observableArrayList();
 		ObservableList<RuleHolder> holders = controller.getRuleCodesAndNames(setValue);
