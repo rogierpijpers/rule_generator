@@ -161,11 +161,7 @@ public class BusinessRuleDAO {
 				String attribute2TargetDatabaseType = null;
 				
 				if(attributeID1 != 0){
-					String attQuery = "SELECT A.NAME AS ATTRIBUTE_NAME, T.NAME AS TABLE_NAME, T.ORACLETARGETDATABASEID AS DB_NAME, T.DATABASETYPE AS DB_TYPE "
-							+"FROM ATTRIBUTE A, TARGETTABLE T "
-							+"WHERE A.TABLEID = T.ID "
-							+"AND A.ID = "+attributeID1+"";
-					ResultSet attRes = connection.query(attQuery);
+					ResultSet attRes = getAttributeResultSet(connection, attributeID1);
 					while(attRes.next()){
 						attribute1Name = attRes.getString("ATTRIBUTE_NAME");
 						attribute1TableName = attRes.getString("TABLE_NAME");
@@ -175,11 +171,7 @@ public class BusinessRuleDAO {
 				}
 				
 				if(attributeID2 != 0){
-					String attQuery = "SELECT A.NAME AS ATTRIBUTE_NAME, T.NAME AS TABLE_NAME, T.ORACLETARGETDATABASEID AS DB_NAME, T.DATABASETYPE AS DB_TYPE "
-							+"FROM ATTRIBUTE A, TARGETTABLE T "
-							+"WHERE A.TABLEID = T.ID "
-							+"AND A.ID = "+attributeID2+"";
-					ResultSet attRes = connection.query(attQuery);
+					ResultSet attRes = getAttributeResultSet(connection, attributeID2);
 					while(attRes.next()){
 						attribute2Name = attRes.getString("ATTRIBUTE_NAME");
 						attribute2TableName = attRes.getString("TABLE_NAME");
@@ -206,7 +198,15 @@ public class BusinessRuleDAO {
 		}
 		return ruleDTO;
 	}
-	
+
+	private static ResultSet getAttributeResultSet(DatabaseConnection connection, int attributeID) {
+		String attQuery = "SELECT A.NAME AS ATTRIBUTE_NAME, T.NAME AS TABLE_NAME, T.ORACLETARGETDATABASEID AS DB_NAME, T.DATABASETYPE AS DB_TYPE "
+                +"FROM ATTRIBUTE A, TARGETTABLE T "
+                +"WHERE A.TABLEID = T.ID "
+                +"AND A.ID = "+attributeID+"";
+		return connection.query(attQuery);
+	}
+
 	private static String parseValue(String value){
 		try{
 			DateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
