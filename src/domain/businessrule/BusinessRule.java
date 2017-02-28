@@ -3,6 +3,7 @@ package domain.businessrule;
 import java.util.ArrayList;
 
 
+import domain.businessrule.rule.*;
 import util.RuleDTO;
 import util.RuleHolder;
 import data.BusinessRuleDAO;
@@ -12,14 +13,6 @@ import domain.businessrule.database.Column;
 import domain.businessrule.database.DatabaseType;
 import domain.businessrule.database.TargetDatabase;
 import domain.businessrule.database.Table;
-import domain.businessrule.rule.AttributeCompare;
-import domain.businessrule.rule.AttributeList;
-import domain.businessrule.rule.AttributeOther;
-import domain.businessrule.rule.AttributeRange;
-import domain.businessrule.rule.InterEntityCompare;
-import domain.businessrule.rule.Operator;
-import domain.businessrule.rule.TupleCompare;
-import domain.businessrule.rule.TupleOther;
 
 public abstract class BusinessRule {
 
@@ -66,10 +59,6 @@ public abstract class BusinessRule {
 
 	// ---- for retrieving from database
 
-	public static ArrayList<RuleHolder> getAllCodesAndNames() {
-		return BusinessRuleDAO.getAllCodesAndNames();
-	}
-
 	public static BusinessRule getDetails(String code) {
 		RuleDTO dto = BusinessRuleDAO.getBusinessRule(code);
 		
@@ -96,12 +85,7 @@ public abstract class BusinessRule {
 		return null;	
 	}
 
-	public static ArrayList<RuleHolder> getCodesAndNamesFromSet(String setName) {
-		return BusinessRuleDAO.getAllCodesAndNamesFromSet(setName);
-	}
-	
-	
-	
+
 	public static ArrayList<String> getAllSetNames(){
 		return SetDAO.getAllSetNames();
 	}
@@ -181,7 +165,7 @@ public abstract class BusinessRule {
 		
 		ArrayList<String> values = dto.getListValue();
 		
-		BusinessRule rule = new AttributeList(dto.getCode(), dto.getName(), column, operator, type, values);
+		BusinessRule rule = new AttributeList(new AttributeListParameterObject(dto.getCode(), dto.getName(), column, operator, type, values));
 		
 		return rule;
 	}
