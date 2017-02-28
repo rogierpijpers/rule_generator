@@ -9,14 +9,18 @@ import java.sql.Statement;
 import data.utility.Logger;
 
 public class DatabaseConnection implements AutoCloseable{
+	public static final String JDBC_ORACLE_THIN_ONDORA02_HU_NL_8521_CURSUS02 = "jdbc:oracle:thin:@ondora02.hu.nl:8521:cursus02";
+	public static final String ORACLE_JDBC_DRIVER_ORACLE_DRIVER = "oracle.jdbc.driver.OracleDriver";
+	public static final String TOSAD_2015_2C_TEAM1 = "tosad_2015_2c_team1";
+	public static final String TOSAD_2015_2C_TEAM11 = "tosad_2015_2c_team1";
 	private Connection connection;
 	private Statement statement;
 	
 	public DatabaseConnection() {
-		String URL = "jdbc:oracle:thin:@ondora02.hu.nl:8521:cursus02";
-		String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
-		String USERNAME = "tosad_2015_2c_team1";
-		String PASSWORD = "tosad_2015_2c_team1";
+		String URL = JDBC_ORACLE_THIN_ONDORA02_HU_NL_8521_CURSUS02;
+		String JDBC_DRIVER = ORACLE_JDBC_DRIVER_ORACLE_DRIVER;
+		String USERNAME = TOSAD_2015_2C_TEAM1;
+		String PASSWORD = TOSAD_2015_2C_TEAM11;
 		try{
 			Class.forName(JDBC_DRIVER);
 		}catch(ClassNotFoundException e){
