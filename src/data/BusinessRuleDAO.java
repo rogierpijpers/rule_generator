@@ -1,6 +1,7 @@
 package data;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -159,17 +160,13 @@ public class BusinessRuleDAO {
 				String attribute2TableName = null;
 				String attribute2TargetDatabase = null;
 				String attribute2TargetDatabaseType = null;
-				
-				if(attributeID1 != 0){
-					ResultSet attRes = getAttributeResultSet(connection, attributeID1);
-					while(attRes.next()){
-						attribute1Name = attRes.getString("ATTRIBUTE_NAME");
-						attribute1TableName = attRes.getString("TABLE_NAME");
-						attribute1TargetDatabase = attRes.getString("DB_NAME");
-						attribute1TargetDatabaseType =attRes.getString("DB_TYPE");
-					}
-				}
-				
+
+				AttributeDTO attributeDTO = new AttributeDTO(connection, attributeID1, attribute1Name, attribute1TableName, attribute1TargetDatabase, attribute1TargetDatabaseType).invoke();
+				attribute1Name = attributeDTO.getAttribute1Name();
+				attribute1TableName = attributeDTO.getAttribute1TableName();
+				attribute1TargetDatabase = attributeDTO.getAttribute1TargetDatabase();
+				attribute1TargetDatabaseType = attributeDTO.getAttribute1TargetDatabaseType();
+
 				if(attributeID2 != 0){
 					ResultSet attRes = getAttributeResultSet(connection, attributeID2);
 					while(attRes.next()){
@@ -225,6 +222,52 @@ public class BusinessRuleDAO {
 		}
 		return value;
 	}
-	
 
+
+	private static class AttributeDTO {
+		private DatabaseConnection connection;
+		private int attributeID1;
+		private String attribute1Name;
+		private String attribute1TableName;
+		private String attribute1TargetDatabase;
+		private String attribute1TargetDatabaseType;
+
+		public AttributeDTO(DatabaseConnection connection, int attributeID1, String attribute1Name, String attribute1TableName, String attribute1TargetDatabase, String attribute1TargetDatabaseType) {
+			this.connection = connection;
+			this.attributeID1 = attributeID1;
+			this.attribute1Name = attribute1Name;
+			this.attribute1TableName = attribute1TableName;
+			this.attribute1TargetDatabase = attribute1TargetDatabase;
+			this.attribute1TargetDatabaseType = attribute1TargetDatabaseType;
+		}
+
+		public String getAttribute1Name() {
+			return attribute1Name;
+		}
+
+		public String getAttribute1TableName() {
+			return attribute1TableName;
+		}
+
+		public String getAttribute1TargetDatabase() {
+			return attribute1TargetDatabase;
+		}
+
+		public String getAttribute1TargetDatabaseType() {
+			return attribute1TargetDatabaseType;
+		}
+
+		public AttributeDTO invoke() throws SQLException {
+			if(attributeID1 != 0){
+                ResultSet attRes = getAttributeResultSet(connection, attributeID1);
+                while(attRes.next()){
+                    attribute1Name = attRes.getString("ATTRIBUTE_NAME");
+                    attribute1TableName = attRes.getString("TABLE_NAME");
+                    attribute1TargetDatabase = attRes.getString("DB_NAME");
+                    attribute1TargetDatabaseType =attRes.getString("DB_TYPE");
+                }
+            }
+			return this;
+		}
+	}
 }
