@@ -24,14 +24,14 @@ public class OracleTemplateBuilder implements TemplateBuilder {
 
 		String arguments = bodyName + "(";
 
-		ST template = assemblyTemplate(typeCode, bodyName, arguments);
+		ST template = assemblyTemplate(templateDAO, typeCode, bodyName, arguments);
 
 		ST result = new ST(template.render());
 		
 		return result;
 	}
 
-	private ST assemblyTemplate(String typeCode, String bodyName, String arguments) {
+	private static ST assemblyTemplate(TemplateDAO templateDAO, String typeCode, String bodyName, String arguments) {
 		TemplateDTO bodyDTO = templateDAO.getTemplate(bodyName);
 		TemplateDTO ruleDTO = templateDAO.getTemplate("PLSQL_" + typeCode + "_TEMPLATE");
 		TemplateDTO targetDTO = templateDAO.getTemplate("PLSQL_" + typeCode + "_TARGET_TEMPLATE");
