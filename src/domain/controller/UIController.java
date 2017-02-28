@@ -7,7 +7,7 @@ import util.RuleHolder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class UIController {
+public class UIController implements IUIController {
 	private GeneratorController generator;
 	private BusinessRuleService ruleService;
 	
@@ -16,6 +16,7 @@ public class UIController {
 		ruleService = new BusinessRuleServiceImpl();
 	}
 	
+	@Override
 	public void generateBusinessRules(ObservableList<String> ruleCodes, String saveDirectory, boolean execute){
 		for(String ruleCode : ruleCodes){
 			generator.setScriptDirectory(saveDirectory);
@@ -24,11 +25,13 @@ public class UIController {
 		}
 	}
 	
+	@Override
 	public ObservableList<String> getAllSets(){
 		ObservableList<String> result = FXCollections.observableArrayList(ruleService.getAllSetNames());
 		return result;
 	}
 	
+	@Override
 	public ObservableList<RuleHolder> getRuleCodesAndNames(String setName){
 		ObservableList<RuleHolder> result = FXCollections.observableArrayList(ruleService.getCodesAndNamesFromSet(setName));
 		return result;
