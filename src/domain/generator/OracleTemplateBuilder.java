@@ -25,7 +25,7 @@ public class OracleTemplateBuilder implements TemplateBuilder {
 		String arguments = bodyName + "(";
 
 		ST template = assemblyTemplate(typeCode, bodyName, arguments);
-		
+
 		ST result = new ST(template.render());
 		
 		return result;
@@ -43,10 +43,9 @@ public class OracleTemplateBuilder implements TemplateBuilder {
 		arguments += bodyDTO.getArgument() + ", " + ruleDTO.getArgument() + ", " + targetDTO.getArgument() + ") ::= ";
 
 		STGroup group = new STGroupString(arguments + bodyTemplate);
-		ST template = group.getInstanceOf(bodyName);
-		template.add("target", targetTemplate);
-		template.add("ruleCode", ruleTemplate);
-		return template;
+		group.getInstanceOf(bodyName).add("target", targetTemplate);
+		group.getInstanceOf(bodyName).add("ruleCode", ruleTemplate);
+		return group.getInstanceOf(bodyName);
 	}
 
 }
