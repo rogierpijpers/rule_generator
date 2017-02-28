@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 
 import domain.businessrule.BusinessRule;
-import domain.businessrule.BusinessRuleType;
 import domain.businessrule.database.Attribute;
 import domain.businessrule.database.Column;
 import domain.businessrule.database.TargetDatabase;
@@ -15,13 +14,13 @@ public class AttributeList extends BusinessRule {
 	private Operator operator;
 	private ArrayList<String> value;
 
-	public AttributeList(String code, String name, Attribute attribute, Operator operator, BusinessRuleType businessRuleType, ArrayList<String> value) {
-		super.setCode(code);
-		super.setName(name);
-		super.setType(businessRuleType);
-		this.attribute = attribute;
-		this.operator = operator;
-		this.value = value;
+	public AttributeList(AttributeListParameterObject parameterObject) {
+		super.setCode(parameterObject.getCode());
+		super.setName(parameterObject.getName());
+		super.setType(parameterObject.getBusinessRuleType());
+		this.attribute = parameterObject.getAttribute();
+		this.operator = parameterObject.getOperator();
+		this.value = parameterObject.getValue();
 	}
 
 	public Attribute getAttribute() {
