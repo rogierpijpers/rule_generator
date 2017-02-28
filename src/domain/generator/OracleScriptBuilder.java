@@ -28,35 +28,35 @@ public class OracleScriptBuilder implements ScriptBuilder {
 		return template.render();
 	}
 	
-	private ST fill(ST template, BusinessRule businessRule){		
-		template.add("code", businessRule.getCode());		
-		switch (businessRule.getType().getCode()) {
+	private ST fill(ST template, BusinessRule rule){
+		template.add("code", rule.getCode());
+		switch (rule.getType().getCode()) {
 		case "ARNG":
-			template =  fillARNG(template, businessRule);		
+			template =  fillARNG(template, rule);
 			break;
 		case "ACMP":
-			template = 	fillACMP(template, businessRule);
+			template = 	fillACMP(template, rule);
 			break;
 		case "ALIS":
-			template = 	fillALIS(template, businessRule);
+			template = 	fillALIS(template, rule);
 			break;
 		case "AOTH":
-			template = 	fillAOTH(template, businessRule);
+			template = 	fillAOTH(template, rule);
 			break;
 		case "TCMP":
-			template = 	fillTCMP(template, businessRule);
+			template = 	fillTCMP(template, rule);
 			break;
 		case "TOTH":
-			template = 	fillTOTH(template, businessRule);
+			template = 	fillTOTH(template, rule);
 			break;
 		case "ICMP":
-			template = 	fillICMP(template, businessRule);
+			template = 	fillICMP(template, rule);
 			break;
 		case "EOTH":
-			template =  fillEOTH(template, businessRule);	
+			template =  fillEOTH(template, rule);
 			break;
 		case "MODI":
-			template = 	fillMODI(template, businessRule);
+			template = 	fillMODI(template, rule);
 			break;
 		}	
 		return template;
