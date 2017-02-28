@@ -4,6 +4,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
+import domain.controller.UIControllerBuilder;
 import util.RuleHolder;
 import domain.controller.UIController;
 import javafx.application.Application;
@@ -39,7 +40,7 @@ public class GeneratorUI extends Application{
 	private String saveDirectory;
 
 	private void initializeControllers(){
-		controller = new UIController();
+		controller = new UIControllerBuilder().createUIController();
 		saveDirectory = getApplicationPath();
 	}
 
