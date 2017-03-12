@@ -42,7 +42,7 @@ public class GeneratorController extends GeneratorControllerTemplate{
 
 	@Override
 	protected void instantiateGeneratorService(BusinessRule businessRule){
-		GeneratorServiceImpl service = new GeneratorServiceImpl(businessRule.getTargetDatabase());
+		new GeneratorServiceImpl(businessRule.getTargetDatabase());
 	}
 
 	@Override
