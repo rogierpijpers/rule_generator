@@ -29,7 +29,9 @@ public class TemplateDAO {
 		}
 		finally{
 			try {
+                            if(connection != null){
 				connection.close();
+                            }
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

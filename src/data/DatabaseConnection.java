@@ -16,7 +16,7 @@ public class DatabaseConnection implements AutoCloseable{
 	private Connection connection;
 	private Statement statement;
 	
-	private DatabaseConnection() {
+	DatabaseConnection() {
 		String URL = JDBC_ORACLE_THIN_ONDORA02_HU_NL_8521_CURSUS02;
 		String JDBC_DRIVER = ORACLE_JDBC_DRIVER_ORACLE_DRIVER;
 		String USERNAME = TOSAD_2015_2C_TEAM1;
